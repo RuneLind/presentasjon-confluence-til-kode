@@ -79,7 +79,7 @@ export const BlankSlateScene: React.FC = () => {
               {"🤔"}
             </div>
             <h3 style={{ fontSize: 28, fontWeight: 600, color: theme.primary, marginBottom: 16 }}>
-              Som en ny konsulent på dag 1
+              Som en ny konsulent på første dag
             </h3>
             <p style={{ fontSize: 22, color: theme.textMuted, lineHeight: 1.6 }}>
               Uansett hvor smart vedkommende er — uten kontekst om prosjektet, domenet og teamet sitter de bare og ser på en tom skjerm.
