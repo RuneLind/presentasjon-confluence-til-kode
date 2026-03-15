@@ -19,10 +19,10 @@ const scenes: Array<{ name: string; component: React.FC }> = [
   { name: "To ting", component: TwoThingsScene },
   { name: "Arkitektur", component: ArchitectureScene },
   { name: "Datakvalitet", component: DataQualityScene },
-  { name: "Hybrid s\u00F8k", component: HybridSearchScene },
-  { name: "MCP-verkt\u00F8y", component: MCPToolsScene },
+  { name: "Hybrid søk", component: HybridSearchScene },
+  { name: "MCP-verktøy", component: MCPToolsScene },
   { name: "Muninn & Huginn", component: MuninnHuginnScene },
-  { name: "L\u00E6rdommer", component: KeyLearningsScene },
+  { name: "Lærdommer", component: KeyLearningsScene },
   { name: "Avslutning", component: ClosingScene },
 ];
 

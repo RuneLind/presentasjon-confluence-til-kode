@@ -2,9 +2,9 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } fr
 import { theme } from "../styles/theme";
 
 const systems = [
-  { name: "Confluence", icon: "\uD83D\uDCD8", desc: "Dokumentasjon, retningslinjer, regelverk", color: "#2684FF" },
-  { name: "Jira", icon: "\uD83D\uDCCB", desc: "Oppgaver, akseptansekriterier, kommentarer", color: "#0052CC" },
-  { name: "Kildekode", icon: "\uD83D\uDCBB", desc: "Implementasjon, tester, konfigurasjon", color: "#27ae60" },
+  { name: "Confluence", icon: "📘", desc: "Dokumentasjon, retningslinjer, regelverk", color: "#2684FF" },
+  { name: "Jira", icon: "📋", desc: "Oppgaver, akseptansekriterier, kommentarer", color: "#0052CC" },
+  { name: "Kildekode", icon: "💻", desc: "Implementasjon, tester, konfigurasjon", color: "#27ae60" },
 ];
 
 export const ProblemScene: React.FC = () => {
@@ -133,7 +133,7 @@ export const ProblemScene: React.FC = () => {
         <p style={{ fontSize: 24, color: theme.text, lineHeight: 1.5 }}>
           Spredt over tre systemer, hundrevis av sider, og{" "}
           <span style={{ color: theme.secondary, fontWeight: 600 }}>
-            \u00E5revis med historikk
+            årevis med historikk
           </span>
         </p>
       </div>

@@ -3,26 +3,26 @@ import { theme } from "../styles/theme";
 
 const tools = [
   {
-    name: "Kunnskapss\u00F8k",
-    desc: "Kuraterte Confluence-dokumenter og Jira-saker via hybrid s\u00F8kepipeline",
-    example: "\u00ABHva er reglene for \u00E5rsavregning?\u00BB",
-    icon: "\uD83D\uDCDA",
+    name: "Kunnskapssøk",
+    desc: "Kuraterte Confluence-dokumenter og Jira-saker via hybrid søkepipeline",
+    example: "«Hva er reglene for årsavregning?»",
+    icon: "📚",
     color: theme.primary,
-    tags: ["Confluence", "Jira", "Hybrid s\u00F8k"],
+    tags: ["Confluence", "Jira", "Hybrid søk"],
   },
   {
     name: "Kunnskapsgraf",
     desc: "Strukturerte relasjoner i domenet. Deterministiske svar, ingen hallusinasjon.",
-    example: "\u00ABHvilke SEDer tilh\u00F8rer LA_BUC_01?\u00BB",
-    icon: "\uD83D\uDD17",
+    example: "«Hvilke SEDer tilhører LA_BUC_01?»",
+    icon: "🔗",
     color: theme.accent,
     tags: ["Regex", "Entiteter", "Deterministisk"],
   },
   {
-    name: "Kodes\u00F8k",
+    name: "Kodesøk",
     desc: "Kildekode i fire repoer via Serena MCP. Implementasjoner, tester, konfigurasjon.",
-    example: "\u00ABHvor er lovvalgsh\u00E5ndteringen implementert?\u00BB",
-    icon: "\uD83D\uDCBB",
+    example: "«Hvor er lovvalgshåndteringen implementert?»",
+    icon: "💻",
     color: theme.success,
     tags: ["Serena", "4 repoer", "On-demand"],
   },
@@ -73,7 +73,7 @@ export const MCPToolsScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Agenten velger selv hvilket verkt\u00F8y den bruker
+        Agenten velger selv hvilket verktøy den bruker
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 1300, width: "100%" }}>

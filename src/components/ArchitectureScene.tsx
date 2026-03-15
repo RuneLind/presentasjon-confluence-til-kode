@@ -6,24 +6,24 @@ const phases = [
   {
     num: "1",
     title: "Fang oppgaven",
-    desc: "Chrome-extension leser Jira-siden direkte fra nettleseren. Ingen API-n\u00F8kler.",
-    icon: "\uD83C\uDF10",
+    desc: "Chrome-extension leser Jira-siden direkte fra nettleseren. Ingen API-nøkler.",
+    icon: "🌐",
     color: theme.primary,
-    detail: "DOM \u2192 Markdown \u2192 Muninn",
+    detail: "DOM → Markdown → Muninn",
   },
   {
     num: "2",
-    title: "Analys\u00E9r med AI",
-    desc: "Agenten s\u00F8ker automatisk i tre kunnskapskilder via MCP-verkt\u00F8y.",
-    icon: "\uD83E\uDDE0",
+    title: "Analysér med AI",
+    desc: "Agenten søker automatisk i tre kunnskapskilder via MCP-verktøy.",
+    icon: "🧠",
     color: theme.accent,
     detail: "Dokumentasjon + Graf + Kode",
   },
   {
     num: "3",
     title: "Innsikt i chatten",
-    desc: "Sanntidsanalyse med oppf\u00F8lgingssp\u00F8rsm\u00E5l. Se hvilke s\u00F8k som gj\u00F8res.",
-    icon: "\uD83D\uDCAC",
+    desc: "Sanntidsanalyse med oppfølgingsspørsmål. Se hvilke søk som gjøres.",
+    icon: "💬",
     color: theme.success,
     detail: "Streaming + samtalehistorikk",
   },
@@ -31,9 +31,9 @@ const phases = [
     num: "4",
     title: "Fra innsikt til handling",
     desc: "Samtalen destilleres til et arbeidsdokument for kode-agenten.",
-    icon: "\uD83D\uDE80",
+    icon: "🚀",
     color: theme.warning,
-    detail: "Kontekst \u2192 Implementering",
+    detail: "Kontekst → Implementering",
   },
 ];
 
@@ -115,7 +115,7 @@ export const ArchitectureScene: React.FC = () => {
                     transition: "color 0.3s ease-out",
                   }}
                 >
-                  {"\u25B6"}
+                  {"▶"}
                 </div>
               )}
 
@@ -188,7 +188,7 @@ export const ArchitectureScene: React.FC = () => {
             fontFamily: theme.monoFont,
           }}
         >
-          Space / \u2192 neste fase
+          Space / → neste fase
         </div>
       )}
     </AbsoluteFill>

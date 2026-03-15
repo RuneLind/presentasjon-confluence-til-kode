@@ -4,32 +4,32 @@ import { theme } from "../styles/theme";
 
 const learnings = [
   {
-    title: "Kontekstkvalitet sl\u00E5r modellst\u00F8rrelse",
-    desc: "Et godt kuratert kunnskapss\u00F8k med hybrid retrieval gir bedre resultater enn en st\u00F8rre modell med d\u00E5rligere kontekst.",
-    highlight: "Invest\u00E9r i dataene, ikke bare i modellen",
+    title: "Kontekstkvalitet slår modellstørrelse",
+    desc: "Et godt kuratert kunnskapssøk med hybrid retrieval gir bedre resultater enn en større modell med dårligere kontekst.",
+    highlight: "Investér i dataene, ikke bare i modellen",
     color: theme.primary,
-    icon: "\uD83C\uDFAF",
+    icon: "🎯",
   },
   {
-    title: "Kurat\u00E9r f\u00F8r du indekserer",
-    desc: "Rens, tagg og struktur\u00E9r. St\u00F8y i indeksen = st\u00F8y i svarene.",
+    title: "Kuratér før du indekserer",
+    desc: "Rens, tagg og strukturér. Støy i indeksen = støy i svarene.",
     highlight: "35% av chunks eliminert ved opprydding",
     color: theme.accent,
-    icon: "\uD83E\uDDF9",
+    icon: "🧹",
   },
   {
     title: "MCP er en game-changer",
-    desc: "\u00C5pen standard som lar agenter bruke verkt\u00F8y p\u00E5 en konsistent m\u00E5te. Mer effektivt, mer presist, skalerer.",
+    desc: "Åpen standard som lar agenter bruke verktøy på en konsistent måte. Mer effektivt, mer presist, skalerer.",
     highlight: "La agenten hente det den trenger",
     color: theme.success,
-    icon: "\uD83D\uDD0C",
+    icon: "🔌",
   },
   {
     title: "Start med det som gir mest verdi",
-    desc: "For oss: Confluence-dokumentasjon. For andre: Notion, interne wikier, kodes\u00F8k.",
-    highlight: "Finn kunnskapskilden med st\u00F8rst effekt",
+    desc: "For oss: Confluence-dokumentasjon. For andre: Notion, interne wikier, kodesøk.",
+    highlight: "Finn kunnskapskilden med størst effekt",
     color: theme.warning,
-    icon: "\uD83D\uDE80",
+    icon: "🚀",
   },
 ];
 
@@ -88,7 +88,7 @@ export const KeyLearningsScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        N\u00F8kkell\u00E6rdommer
+        Nøkkellærdommer
       </h2>
 
       <div
@@ -176,7 +176,7 @@ export const KeyLearningsScene: React.FC = () => {
             fontFamily: theme.monoFont,
           }}
         >
-          Space / \u2192 neste l\u00E6rdom
+          Space / → neste lærdom
         </div>
       )}
     </AbsoluteFill>

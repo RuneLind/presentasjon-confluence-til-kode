@@ -76,13 +76,13 @@ export const BlankSlateScene: React.FC = () => {
             }}
           >
             <div style={{ fontSize: 48, marginBottom: 20 }}>
-              {"\uD83E\uDD14"}
+              {"🤔"}
             </div>
             <h3 style={{ fontSize: 28, fontWeight: 600, color: theme.primary, marginBottom: 16 }}>
-              Som en ny konsulent p\u00E5 dag 1
+              Som en ny konsulent på dag 1
             </h3>
             <p style={{ fontSize: 22, color: theme.textMuted, lineHeight: 1.6 }}>
-              Uansett hvor smart vedkommende er, trenger de to ting for \u00E5 bli nyttig:
+              Uansett hvor smart vedkommende er, trenger de to ting for å bli nyttig:
             </p>
             <ul
               style={{
@@ -92,11 +92,11 @@ export const BlankSlateScene: React.FC = () => {
               }}
             >
               <li style={{ fontSize: 22, color: theme.text, marginBottom: 12, paddingLeft: 24 }}>
-                <span style={{ color: theme.primary, marginRight: 12 }}>{"\u25B6"}</span>
+                <span style={{ color: theme.primary, marginRight: 12 }}>{"▶"}</span>
                 Vite hvem de er og hva de kan
               </li>
               <li style={{ fontSize: 22, color: theme.text, paddingLeft: 24 }}>
-                <span style={{ color: theme.primary, marginRight: 12 }}>{"\u25B6"}</span>
+                <span style={{ color: theme.primary, marginRight: 12 }}>{"▶"}</span>
                 Tilgang til systemer og dokumentasjon
               </li>
             </ul>
@@ -114,7 +114,7 @@ export const BlankSlateScene: React.FC = () => {
             }}
           >
             <div style={{ fontSize: 48, marginBottom: 20 }}>
-              {"\uD83E\uDDE0"}
+              {"🧠"}
             </div>
             <h3 style={{ fontSize: 28, fontWeight: 600, color: theme.accent, marginBottom: 16 }}>
               Kontekstvinduet
@@ -153,7 +153,7 @@ export const BlankSlateScene: React.FC = () => {
                 />
               </div>
               <div style={{ fontSize: 14, color: theme.textMuted, marginTop: 8 }}>
-                Fyll den riktig \u2014 ikke med alt
+                Fyll den riktig — ikke med alt
               </div>
             </div>
           </div>
@@ -173,7 +173,7 @@ export const BlankSlateScene: React.FC = () => {
         }}
       >
         <p style={{ fontSize: 26, color: theme.gold, fontWeight: 600, textAlign: "center" }}>
-          Verdien ligger ikke i modellen \u2014 den ligger i konteksten den f\u00E5r
+          Verdien ligger ikke i modellen — den ligger i konteksten den får
         </p>
       </div>
     </AbsoluteFill>

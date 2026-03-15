@@ -10,39 +10,39 @@ export const HybridSearchScene: React.FC = () => {
 
   const techniques = [
     {
-      title: "Semantisk s\u00F8k",
-      desc: "Flerspr\u00E5klige embeddings som forst\u00E5r betydning",
+      title: "Semantisk søk",
+      desc: "Flerspråklige embeddings som forstår betydning",
       color: theme.primary,
-      icon: "\uD83E\uDDE0",
+      icon: "🧠",
       example: {
-        query: "\u00ABRammeavtaler\u00BB",
-        match: "\u00ABFramework agreements\u00BB",
+        query: "«Rammeavtaler»",
+        match: "«Framework agreements»",
         score: "0.83",
         scoreLabel: "cosine similarity",
       },
     },
     {
-      title: "N\u00F8kkelords\u00F8k",
+      title: "Nøkkelordsøk",
       desc: "Eksakte termer, artikkelnumre, forkortelser",
       color: theme.success,
-      icon: "\uD83D\uDD0D",
+      icon: "🔍",
       example: {
-        query: "\u00ABLA_BUC_01\u00BB",
-        match: "\u00ABLA_BUC_01\u00BB",
+        query: "«LA_BUC_01»",
+        match: "«LA_BUC_01»",
         score: "1.0",
         scoreLabel: "eksakt treff",
       },
     },
     {
       title: "Cross-encoder reranking",
-      desc: "Leser sp\u00F8rring og dokument sammen for presise relevansvurderinger",
+      desc: "Leser spørring og dokument sammen for presise relevansvurderinger",
       color: theme.accent,
-      icon: "\u2696\uFE0F",
+      icon: "⚖️",
       example: {
-        query: "Sp\u00F8rring + Dokument",
+        query: "Spørring + Dokument",
         match: "Relevansscore",
-        score: "\u2713",
-        scoreLabel: "\u00E6rlig konfidens",
+        score: "✓",
+        scoreLabel: "ærlig konfidens",
       },
     },
   ];
@@ -75,7 +75,7 @@ export const HybridSearchScene: React.FC = () => {
           marginBottom: 20,
         }}
       >
-        Hybrid s\u00F8k
+        Hybrid søk
       </h2>
 
       <p
@@ -86,7 +86,7 @@ export const HybridSearchScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Hvorfor \u00E9tt s\u00F8k ikke er nok
+        Hvorfor étt søk ikke er nok
       </p>
 
       <div style={{ display: "flex", gap: 30, maxWidth: 1500, width: "100%" }}>
@@ -219,7 +219,7 @@ export const HybridSearchScene: React.FC = () => {
             border: `1px solid ${theme.text}20`,
           }}
         >
-          Fusjon \u2192 Reranking \u2192 Beste resultater
+          Fusjon → Reranking → Beste resultater
         </span>
         <div
           style={{

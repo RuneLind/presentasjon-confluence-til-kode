@@ -61,7 +61,7 @@ export const ClosingScene: React.FC = () => {
 
   const resources = [
     { name: "Muninn", desc: "AI-plattform", url: "github.com/RuneLind/muninn" },
-    { name: "Huginn", desc: "Kunnskapss\u00F8k", url: "github.com/RuneLind/huginn" },
+    { name: "Huginn", desc: "Kunnskapssøk", url: "github.com/RuneLind/huginn" },
     { name: "MCP", desc: "Model Context Protocol", url: "modelcontextprotocol.io" },
   ];
 
@@ -113,7 +113,7 @@ export const ClosingScene: React.FC = () => {
           Den som bygger gode kunnskapskilder i dag,
           <br />
           <span style={{ color: theme.primary }}>
-            f\u00E5r de smarteste agentene i morgen
+            får de smarteste agentene i morgen
           </span>
         </p>
       </div>

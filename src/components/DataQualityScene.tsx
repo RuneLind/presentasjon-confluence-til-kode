@@ -85,7 +85,7 @@ export const DataQualityScene: React.FC = () => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
-            <span style={{ fontSize: 36 }}>{"\uD83E\uDD85"}</span>
+            <span style={{ fontSize: 36 }}>{"🦅"}</span>
             <div>
               <h3 style={{ fontSize: 28, fontWeight: 700, color: theme.primary }}>Huginn</h3>
               <p style={{ fontSize: 16, color: theme.textMuted }}>Indeksering av kunnskap</p>
@@ -142,7 +142,7 @@ export const DataQualityScene: React.FC = () => {
                       padding: "4px 0",
                     }}
                   >
-                    {"\u2193"}
+                    {"↓"}
                   </div>
                 )}
               </div>
@@ -193,7 +193,7 @@ export const DataQualityScene: React.FC = () => {
             <h4 style={{ fontSize: 20, fontWeight: 600, color: theme.text, marginBottom: 16 }}>
               Hva ble fjernet?
             </h4>
-            {["Tomme chunks", "Metadata-st\u00F8y", "Irrelevante kodeblokker", "Duplikater"].map(
+            {["Tomme chunks", "Metadata-støy", "Irrelevante kodeblokker", "Duplikater"].map(
               (item, i) => (
                 <div
                   key={i}
@@ -206,7 +206,7 @@ export const DataQualityScene: React.FC = () => {
                     color: theme.textMuted,
                   }}
                 >
-                  <span style={{ color: theme.secondary }}>{"\u2717"}</span>
+                  <span style={{ color: theme.secondary }}>{"✗"}</span>
                   {item}
                 </div>
               )
@@ -227,7 +227,7 @@ export const DataQualityScene: React.FC = () => {
         }}
       >
         <p style={{ fontSize: 22, color: theme.gold, fontWeight: 500, textAlign: "center" }}>
-          Ingen mengde reranking fikser d\u00E5rlig inputdata
+          Ingen mengde reranking fikser dårlig inputdata
         </p>
       </div>
     </AbsoluteFill>

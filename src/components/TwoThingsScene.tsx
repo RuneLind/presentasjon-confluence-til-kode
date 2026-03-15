@@ -6,7 +6,7 @@ const personaCode = [
   "# AGENT.md",
   "",
   "Du er en AI-assistent for Team Melosys.",
-  "Domene: EU/E\u00D8S-trygdekoordinering.",
+  "Domene: EU/EØS-trygdekoordinering.",
   "",
   "Du kjenner til:",
   "- BUC (Business Use Case)",
@@ -111,7 +111,7 @@ export const TwoThingsScene: React.FC = () => {
             </h3>
           </div>
           <p style={{ fontSize: 22, color: theme.textMuted, marginBottom: 24, lineHeight: 1.5 }}>
-            Hvem er agenten? Domenekunnskap, fagterminologi, oppf\u00F8rsel.
+            Hvem er agenten? Domenekunnskap, fagterminologi, oppførsel.
           </p>
 
           {/* Code block */}
@@ -160,7 +160,7 @@ export const TwoThingsScene: React.FC = () => {
                     >
                       {displayedLine}
                       {lineFrame > 0 && lineFrame < 12 && cursorVisible && (
-                        <span style={{ color: theme.primary }}>{"\u2588"}</span>
+                        <span style={{ color: theme.primary }}>{"█"}</span>
                       )}
                     </div>
                   );
@@ -202,19 +202,19 @@ export const TwoThingsScene: React.FC = () => {
               2
             </span>
             <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent }}>
-              Verkt\u00F8y (MCP)
+              Verktøy (MCP)
             </h3>
           </div>
           <p style={{ fontSize: 22, color: theme.textMuted, marginBottom: 24, lineHeight: 1.5 }}>
-            Tilgang til ekstern kunnskap. Agenten henter det den trenger, n\u00E5r den trenger det.
+            Tilgang til ekstern kunnskap. Agenten henter det den trenger, når den trenger det.
           </p>
 
           {activeStep >= 1 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
-                { icon: "\uD83D\uDD0D", label: "S\u00F8k i dokumentasjon", desc: "M\u00E5lrettede oppslag" },
-                { icon: "\uD83D\uDD17", label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
-                { icon: "\uD83D\uDCBB", label: "Kodes\u00F8k", desc: "Fire repoer via Serena" },
+                { icon: "🔍", label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
+                { icon: "🔗", label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
+                { icon: "💻", label: "Kodesøk", desc: "Fire repoer via Serena" },
               ].map((tool, i) => (
                 <div
                   key={i}
@@ -258,7 +258,7 @@ export const TwoThingsScene: React.FC = () => {
             fontFamily: theme.monoFont,
           }}
         >
-          Space / \u2192 neste
+          Space / → neste
         </div>
       )}
     </AbsoluteFill>

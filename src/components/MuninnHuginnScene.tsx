@@ -78,7 +78,7 @@ export const MuninnHuginnScene: React.FC = () => {
           marginBottom: 10,
         }}
       >
-        Odins to ravner fra norr\u00F8n mytologi
+        Odins to ravner fra norrøn mytologi
       </p>
 
       <h2
@@ -116,7 +116,7 @@ export const MuninnHuginnScene: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 56, marginBottom: 16 }}>{"\uD83E\uDD85"}</div>
+          <div style={{ fontSize: 56, marginBottom: 16 }}>{"🦅"}</div>
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.primary, marginBottom: 8 }}>
             Huginn
           </h3>
@@ -128,13 +128,13 @@ export const MuninnHuginnScene: React.FC = () => {
               marginBottom: 20,
             }}
           >
-            \u00ABTanke\u00BB
+            «Tanke»
           </p>
           <p style={{ fontSize: 20, color: theme.textMuted, lineHeight: 1.5, marginBottom: 24 }}>
-            S\u00F8kemotoren som indekserer og s\u00F8ker i dokumenter
+            Søkemotoren som indekserer og søker i dokumenter
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-            {["Indeksering", "Hybrid s\u00F8k", "Reranking", "Embeddings"].map((item, i) => (
+            {["Indeksering", "Hybrid søk", "Reranking", "Embeddings"].map((item, i) => (
               <span
                 key={i}
                 style={{
@@ -205,7 +205,7 @@ export const MuninnHuginnScene: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 56, marginBottom: 16 }}>{"\uD83E\uDD85"}</div>
+          <div style={{ fontSize: 56, marginBottom: 16 }}>{"🦅"}</div>
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent, marginBottom: 8 }}>
             Muninn
           </h3>
@@ -217,10 +217,10 @@ export const MuninnHuginnScene: React.FC = () => {
               marginBottom: 20,
             }}
           >
-            \u00ABHukommelse\u00BB
+            «Hukommelse»
           </p>
           <p style={{ fontSize: 20, color: theme.textMuted, lineHeight: 1.5, marginBottom: 24 }}>
-            AI-plattformen som h\u00E5ndterer samtaler, persona og MCP
+            AI-plattformen som håndterer samtaler, persona og MCP
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
             {["Persona", "Hukommelse", "Samtaler", "MCP-kobling"].map((item, i) => (
@@ -254,8 +254,8 @@ export const MuninnHuginnScene: React.FC = () => {
           maxWidth: 800,
         }}
       >
-        Vi brukte Muninn til \u00E5 sp\u00F8rre Huginn om hvordan s\u00F8ket burde fungere{" "}
-        {"\uD83E\uDD2F"}
+        Vi brukte Muninn til å spørre Huginn om hvordan søket burde fungere{" "}
+        {"🤯"}
       </p>
 
       {/* Open source */}
