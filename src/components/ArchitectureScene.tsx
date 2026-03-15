@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
+import { useStepNavigation } from "../hooks/useStepNavigation";
 
 const phases = [
   {
@@ -40,32 +40,7 @@ const phases = [
 export const ArchitectureScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const [activeStep, setActiveStep] = useState(-1);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === " " || e.key === "ArrowRight") {
-        if (activeStep < phases.length - 1) {
-          e.preventDefault();
-          e.stopPropagation();
-          setActiveStep((s) => s + 1);
-        }
-      }
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        if (activeStep > 0) {
-          e.preventDefault();
-          e.stopPropagation();
-          setActiveStep((s) => s - 1);
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown, true);
-    return () => window.removeEventListener("keydown", handleKeyDown, true);
-  }, [activeStep]);
-
-  useEffect(() => {
-    if (frame > 40 && activeStep === -1) setActiveStep(0);
-  }, [frame, activeStep]);
+  const activeStep = useStepNavigation(phases.length);
 
   const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const titleScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });

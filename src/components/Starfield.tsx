@@ -1,32 +1,51 @@
-import { useCurrentFrame, interpolate } from "remotion";
+import { useCurrentFrame, interpolate } from "../remotion-mock";
+
+const STAR_COLORS = ["#ffffff", "#00d4ff", "#a855f7", "#ffffff", "#fbbf24"];
 
 interface StarfieldProps {
-  count?: number;
+  starCount?: number;
+  cycleDuration?: number;
   maxDistance?: number;
-  colors?: string[];
+  maxOpacity?: number;
 }
 
 export const Starfield: React.FC<StarfieldProps> = ({
-  count = 50,
+  starCount = 50,
+  cycleDuration = 400,
   maxDistance = 1200,
-  colors = ["#ffffff", "#00d4ff", "#a855f7", "#ffffff", "#fbbf24"],
+  maxOpacity = 0.4,
 }) => {
   const frame = useCurrentFrame();
-  const cycleDuration = 400;
 
-  const stars = Array.from({ length: count }).map((_, i) => {
-    const angle = (i / count) * Math.PI * 2 + i * 0.5;
+  const stars = Array.from({ length: starCount }).map((_, i) => {
+    const angle = (i / starCount) * Math.PI * 2 + i * 0.5;
     const timeOffset = (i * 7) % cycleDuration;
     const cycleFrame = (frame + timeOffset) % cycleDuration;
-    const distance = interpolate(cycleFrame, [0, cycleDuration], [0, maxDistance], { extrapolateRight: "clamp" });
+    const distance = interpolate(cycleFrame, [0, cycleDuration], [0, maxDistance], {
+      extrapolateRight: "clamp",
+    });
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
-    const size = interpolate(cycleFrame, [0, cycleDuration], [1, 3], { extrapolateRight: "clamp" });
-    const opacity = interpolate(cycleFrame, [0, 20, cycleDuration - 30, cycleDuration], [0, 0.4, 0.4, 0], {
+    const size = interpolate(cycleFrame, [0, cycleDuration], [1, 3], {
+      extrapolateRight: "clamp",
+    });
+    const opacity = interpolate(
+      cycleFrame,
+      [0, cycleDuration],
+      [0, maxOpacity],
+      { extrapolateRight: "clamp" }
+    );
+    // Fade in and out at edges
+    const fadeIn = interpolate(cycleFrame, [0, 20], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
-    const color = colors[i % colors.length];
+    const fadeOut = interpolate(cycleFrame, [cycleDuration - 30, cycleDuration], [1, 0], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+    const finalOpacity = opacity * fadeIn * fadeOut;
+    const color = STAR_COLORS[i % STAR_COLORS.length];
 
     return (
       <div
@@ -39,7 +58,7 @@ export const Starfield: React.FC<StarfieldProps> = ({
           height: size,
           borderRadius: "50%",
           backgroundColor: color,
-          opacity,
+          opacity: finalOpacity,
           boxShadow: `0 0 ${size * 2}px ${color}`,
           pointerEvents: "none",
         }}

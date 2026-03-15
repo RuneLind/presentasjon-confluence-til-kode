@@ -42,7 +42,7 @@ export const HybridSearchScene: React.FC = () => {
         query: "Spørring + Dokument",
         match: "Relevansscore",
         score: "✓",
-        scoreLabel: "ærlig konfidens",
+        scoreLabel: "presis relevans",
       },
     },
   ];

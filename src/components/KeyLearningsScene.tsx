@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
+import { useStepNavigation } from "../hooks/useStepNavigation";
 
 const learnings = [
   {
-    title: "Kontekstkvalitet slår modellstørrelse",
-    desc: "Et godt kuratert kunnskapssøk med hybrid retrieval gir bedre resultater enn en større modell med dårligere kontekst.",
-    highlight: "Investér i dataene, ikke bare i modellen",
+    title: "Dårlig kontekst ødelegger en god modell",
+    desc: "Modellen er allerede smart nok. Men fyller du kontekstvinduet med støy, irrelevant innhold eller utdatert dokumentasjon, hjelper det ikke hvor god modellen er.",
+    highlight: "Investér i konteksten, ikke bare modellen",
     color: theme.primary,
     icon: "🎯",
   },
@@ -36,32 +36,7 @@ const learnings = [
 export const KeyLearningsScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const [activeStep, setActiveStep] = useState(-1);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === " " || e.key === "ArrowRight") {
-        if (activeStep < learnings.length - 1) {
-          e.preventDefault();
-          e.stopPropagation();
-          setActiveStep((s) => s + 1);
-        }
-      }
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        if (activeStep > 0) {
-          e.preventDefault();
-          e.stopPropagation();
-          setActiveStep((s) => s - 1);
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown, true);
-    return () => window.removeEventListener("keydown", handleKeyDown, true);
-  }, [activeStep]);
-
-  useEffect(() => {
-    if (frame > 40 && activeStep === -1) setActiveStep(0);
-  }, [frame, activeStep]);
+  const activeStep = useStepNavigation(learnings.length);
 
   const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const titleScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });
@@ -88,7 +63,7 @@ export const KeyLearningsScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Nøkkellærdommer
+        Hva vi lærte
       </h2>
 
       <div

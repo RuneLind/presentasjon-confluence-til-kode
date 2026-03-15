@@ -227,7 +227,7 @@ export const DataQualityScene: React.FC = () => {
         }}
       >
         <p style={{ fontSize: 22, color: theme.gold, fontWeight: 500, textAlign: "center" }}>
-          Ingen mengde reranking fikser dårlig inputdata
+          Reranking kan ikke redde dårlige data
         </p>
       </div>
     </AbsoluteFill>

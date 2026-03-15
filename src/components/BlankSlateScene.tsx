@@ -82,24 +82,11 @@ export const BlankSlateScene: React.FC = () => {
               Som en ny konsulent på dag 1
             </h3>
             <p style={{ fontSize: 22, color: theme.textMuted, lineHeight: 1.6 }}>
-              Uansett hvor smart vedkommende er, trenger de to ting for å bli nyttig:
+              Uansett hvor smart vedkommende er — uten kontekst om prosjektet, domenet og teamet sitter de bare og ser på en tom skjerm.
             </p>
-            <ul
-              style={{
-                listStyle: "none",
-                marginTop: 20,
-                padding: 0,
-              }}
-            >
-              <li style={{ fontSize: 22, color: theme.text, marginBottom: 12, paddingLeft: 24 }}>
-                <span style={{ color: theme.primary, marginRight: 12 }}>{"▶"}</span>
-                Vite hvem de er og hva de kan
-              </li>
-              <li style={{ fontSize: 22, color: theme.text, paddingLeft: 24 }}>
-                <span style={{ color: theme.primary, marginRight: 12 }}>{"▶"}</span>
-                Tilgang til systemer og dokumentasjon
-              </li>
-            </ul>
+            <p style={{ fontSize: 22, color: theme.text, lineHeight: 1.6, marginTop: 16 }}>
+              En AI-agent har nøyaktig samme problem.
+            </p>
           </div>
         </div>
 
@@ -173,7 +160,7 @@ export const BlankSlateScene: React.FC = () => {
         }}
       >
         <p style={{ fontSize: 26, color: theme.gold, fontWeight: 600, textAlign: "center" }}>
-          Verdien ligger ikke i modellen — den ligger i konteksten den får
+          Modellen er kraftig — men feil kontekst kan ødelegge alt
         </p>
       </div>
     </AbsoluteFill>

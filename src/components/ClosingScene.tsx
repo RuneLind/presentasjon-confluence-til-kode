@@ -44,7 +44,7 @@ export const ClosingScene: React.FC = () => {
         padding: 80,
       }}
     >
-      <Starfield count={40} maxDistance={1000} colors={["#ffffff", "#00d4ff", "#a855f7", "#fbbf24"]} />
+      <Starfield starCount={40} maxDistance={1000} />
 
       {/* Main quote */}
       <div

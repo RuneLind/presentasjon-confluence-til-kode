@@ -23,7 +23,7 @@ const scenes: Array<{ name: string; component: React.FC }> = [
   { name: "Hybrid søk", component: HybridSearchScene },
   { name: "MCP-verktøy", component: MCPToolsScene },
   { name: "Muninn & Huginn", component: MuninnHuginnScene },
-  { name: "Lærdommer", component: KeyLearningsScene },
+  { name: "Hva vi lærte", component: KeyLearningsScene },
   { name: "Avslutning", component: ClosingScene },
 ];
 
