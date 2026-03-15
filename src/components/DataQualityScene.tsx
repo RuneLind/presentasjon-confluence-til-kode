@@ -1,6 +1,14 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
 
+const pipelineSteps = [
+  { icon: "📨", title: "Hent", desc: "Confluence, Notion, Jira" },
+  { icon: "🧹", title: "Rens", desc: "Fjern støy, sensitiv data" },
+  { icon: "✂️", title: "Chunk", desc: "Del opp i søkbare biter" },
+  { icon: "🏷️", title: "Tagg", desc: "50 emner, auto-klassifisert" },
+  { icon: "📊", title: "Indekser", desc: "Vektorembeddings, lokalt" },
+];
+
 export const DataQualityScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -8,23 +16,14 @@ export const DataQualityScene: React.FC = () => {
   const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const titleScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });
 
-  // Huginn card
-  const huginnOpacity = interpolate(frame, [25, 45], [0, 1], {
+  // Huginn badge
+  const badgeOpacity = interpolate(frame, [15, 30], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Pipeline steps
-  const steps = [
-    "Hent dokumenter",
-    "Rydd opp",
-    "Del i chunks",
-    "Tagg med emner",
-    "Generer embeddings",
-  ];
-
   // Stat counter - 35%
-  const statFrame = frame - 80;
+  const statFrame = frame - 85;
   const statOpacity = interpolate(statFrame, [0, 15], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -42,7 +41,7 @@ export const DataQualityScene: React.FC = () => {
   );
 
   // Insight
-  const insightOpacity = interpolate(frame, [110, 130], [0, 1], {
+  const insightOpacity = interpolate(frame, [120, 140], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -56,9 +55,10 @@ export const DataQualityScene: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: 80,
+        padding: "60px 80px",
       }}
     >
+      {/* Title */}
       <h2
         style={{
           opacity: titleOpacity,
@@ -66,152 +66,191 @@ export const DataQualityScene: React.FC = () => {
           fontSize: 52,
           fontWeight: 700,
           color: theme.text,
-          marginBottom: 50,
+          marginBottom: 12,
         }}
       >
         Datakvalitet er alt
       </h2>
 
-      <div style={{ display: "flex", gap: 50, maxWidth: 1400, width: "100%", alignItems: "stretch" }}>
-        {/* Left: Huginn pipeline */}
+      {/* Huginn badge */}
+      <div
+        style={{
+          opacity: badgeOpacity,
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginBottom: 40,
+        }}
+      >
+        <span style={{ fontSize: 22 }}>{"🦅"}</span>
+        <span style={{ fontSize: 18, color: theme.textMuted }}>
+          Huginn — indeksering av kunnskap
+        </span>
+        <span
+          style={{
+            fontFamily: theme.monoFont,
+            fontSize: 13,
+            color: theme.primary,
+            background: `${theme.primary}15`,
+            padding: "3px 12px",
+            borderRadius: 6,
+            marginLeft: 4,
+          }}
+        >
+          github.com/RuneLind/huginn
+        </span>
+      </div>
+
+      {/* Horizontal pipeline */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 0,
+          marginBottom: 50,
+        }}
+      >
+        {pipelineSteps.map((step, i) => {
+          const delay = 30 + i * 12;
+          const cardScale = spring({
+            frame: frame - delay,
+            fps,
+            config: { damping: 12, stiffness: 120 },
+          });
+          const cardOpacity = interpolate(frame - delay, [0, 12], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+
+          const arrowOpacity = interpolate(frame - delay - 6, [0, 10], [0, 0.5], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+
+          return (
+            <div key={i} style={{ display: "flex", alignItems: "center" }}>
+              {/* Arrow */}
+              {i > 0 && (
+                <div
+                  style={{
+                    opacity: arrowOpacity,
+                    color: theme.primary,
+                    fontSize: 20,
+                    padding: "0 12px",
+                    fontFamily: theme.monoFont,
+                  }}
+                >
+                  →
+                </div>
+              )}
+
+              {/* Card */}
+              <div
+                style={{
+                  opacity: cardOpacity,
+                  transform: `scale(${cardScale})`,
+                  background: `${theme.primary}06`,
+                  border: `1px solid ${theme.primary}20`,
+                  borderRadius: 16,
+                  padding: "24px 28px",
+                  textAlign: "center",
+                  minWidth: 190,
+                }}
+              >
+                <div style={{ fontSize: 36, marginBottom: 10 }}>{step.icon}</div>
+                <div
+                  style={{
+                    fontSize: 22,
+                    fontWeight: 700,
+                    color: theme.primary,
+                    marginBottom: 6,
+                  }}
+                >
+                  {step.title}
+                </div>
+                <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.3 }}>
+                  {step.desc}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom: stat + what was removed */}
+      <div
+        style={{
+          display: "flex",
+          gap: 30,
+          maxWidth: 1200,
+          width: "100%",
+          alignItems: "stretch",
+        }}
+      >
+        {/* Big stat */}
         <div
           style={{
             flex: 1,
-            opacity: huginnOpacity,
-            background: `${theme.text}05`,
-            border: `1px solid ${theme.text}15`,
+            opacity: statOpacity,
+            transform: `scale(${statScale})`,
+            background: `${theme.secondary}10`,
+            border: `1px solid ${theme.secondary}30`,
             borderRadius: 20,
-            padding: 40,
+            padding: "30px 40px",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
-            <span style={{ fontSize: 36 }}>{"🦅"}</span>
-            <div>
-              <h3 style={{ fontSize: 28, fontWeight: 700, color: theme.primary }}>Huginn</h3>
-              <p style={{ fontSize: 16, color: theme.textMuted }}>Indeksering av kunnskap</p>
-            </div>
+          <div
+            style={{
+              fontSize: 80,
+              fontWeight: 800,
+              color: theme.secondary,
+              textShadow: `0 0 40px ${theme.secondary}30`,
+              lineHeight: 1,
+            }}
+          >
+            {countUp}%
           </div>
-
-          {steps.map((step, i) => {
-            const delay = 40 + i * 10;
-            const stepOpacity = interpolate(frame - delay, [0, 15], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
-            const stepX = interpolate(frame - delay, [0, 15], [30, 0], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
-
-            return (
-              <div key={i}>
-                <div
-                  style={{
-                    opacity: stepOpacity,
-                    transform: `translateX(${stepX}px)`,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 16,
-                    padding: "12px 20px",
-                    background: `${theme.primary}08`,
-                    border: `1px solid ${theme.primary}15`,
-                    borderRadius: 12,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: theme.monoFont,
-                      fontSize: 14,
-                      color: theme.primary,
-                      background: `${theme.primary}20`,
-                      padding: "4px 10px",
-                      borderRadius: 6,
-                    }}
-                  >
-                    {i + 1}
-                  </span>
-                  <span style={{ fontSize: 20, color: theme.text }}>{step}</span>
-                </div>
-                {i < steps.length - 1 && (
-                  <div
-                    style={{
-                      opacity: stepOpacity * 0.4,
-                      textAlign: "center",
-                      color: theme.primary,
-                      fontSize: 16,
-                      padding: "4px 0",
-                    }}
-                  >
-                    {"↓"}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          <div style={{ fontSize: 20, color: theme.textMuted, marginTop: 10 }}>
+            av chunks eliminert ved opprydding
+          </div>
         </div>
 
-        {/* Right: Results */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 30 }}>
-          {/* Big stat */}
-          <div
-            style={{
-              opacity: statOpacity,
-              transform: `scale(${statScale})`,
-              background: `${theme.secondary}10`,
-              border: `1px solid ${theme.secondary}30`,
-              borderRadius: 20,
-              padding: 40,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 96,
-                fontWeight: 800,
-                color: theme.secondary,
-                textShadow: `0 0 40px ${theme.secondary}30`,
-                lineHeight: 1,
-              }}
-            >
-              {countUp}%
-            </div>
-            <div style={{ fontSize: 22, color: theme.textMuted, marginTop: 12 }}>
-              av chunks eliminert ved opprydding
-            </div>
-          </div>
-
-          {/* What was removed */}
-          <div
-            style={{
-              opacity: statOpacity,
-              background: `${theme.text}05`,
-              border: `1px solid ${theme.text}15`,
-              borderRadius: 16,
-              padding: 30,
-            }}
-          >
-            <h4 style={{ fontSize: 20, fontWeight: 600, color: theme.text, marginBottom: 16 }}>
-              Hva ble fjernet?
-            </h4>
-            {["Tomme chunks", "Metadata-støy", "Irrelevante kodeblokker", "Duplikater"].map(
-              (item, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    marginBottom: 10,
-                    fontSize: 18,
-                    color: theme.textMuted,
-                  }}
-                >
-                  <span style={{ color: theme.secondary }}>{"✗"}</span>
-                  {item}
-                </div>
-              )
-            )}
-          </div>
+        {/* What was removed */}
+        <div
+          style={{
+            flex: 1,
+            opacity: statOpacity,
+            background: `${theme.text}05`,
+            border: `1px solid ${theme.text}15`,
+            borderRadius: 16,
+            padding: "24px 30px",
+          }}
+        >
+          <h4 style={{ fontSize: 18, fontWeight: 600, color: theme.text, marginBottom: 14 }}>
+            Hva ble fjernet?
+          </h4>
+          {["Tomme chunks", "Metadata-støy", "Irrelevante kodeblokker", "Duplikater"].map(
+            (item, i) => (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 8,
+                  fontSize: 17,
+                  color: theme.textMuted,
+                }}
+              >
+                <span style={{ color: theme.secondary }}>{"✗"}</span>
+                {item}
+              </div>
+            )
+          )}
         </div>
       </div>
 
@@ -219,14 +258,14 @@ export const DataQualityScene: React.FC = () => {
       <div
         style={{
           opacity: insightOpacity,
-          marginTop: 40,
-          padding: "18px 40px",
+          marginTop: 30,
+          padding: "16px 36px",
           background: `${theme.gold}10`,
           border: `1px solid ${theme.gold}30`,
           borderRadius: 16,
         }}
       >
-        <p style={{ fontSize: 22, color: theme.gold, fontWeight: 500, textAlign: "center" }}>
+        <p style={{ fontSize: 20, color: theme.gold, fontWeight: 500, textAlign: "center" }}>
           Reranking kan ikke redde dårlige data
         </p>
       </div>
