@@ -3,3 +3,4 @@ dist/
 dist-presentation/
 out/
 .DS_Store
+.idea/
