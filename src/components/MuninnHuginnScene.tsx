@@ -457,7 +457,7 @@ export const MuninnHuginnScene: React.FC = () => {
           border: `1px solid ${theme.success}30`,
         }}
       >
-        Begge prosjektene er open source
+        Prosjektene er lagt ut som open source
       </div>
 
       {/* Hint to expand */}
