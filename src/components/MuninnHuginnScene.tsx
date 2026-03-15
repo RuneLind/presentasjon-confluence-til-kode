@@ -1,38 +1,259 @@
+import { useState, useEffect } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
+
+const dialogue = [
+  {
+    from: "muninn",
+    text: "Søk etter «årsavregning» — trenger regler og unntak.",
+  },
+  {
+    from: "huginn",
+    text: "3 treff via hybrid søk. Beste: «Rutiner for årsavregning» (score 0.91).",
+  },
+  {
+    from: "muninn",
+    text: "Norsk søk funker. Men «Framework agreements» gir 0 treff — prøv på tvers av språk.",
+  },
+  {
+    from: "huginn",
+    text: "Byttet til multilingual-e5-base. «Rammeavtaler» ↔ «Framework agreements»: 0.83.",
+  },
+  {
+    from: "muninn",
+    text: "Mye støy i resultatene. Tomme chunks og metadata-rester.",
+  },
+  {
+    from: "huginn",
+    text: "Ryddet indeks — 35% av chunks fjernet. Kun kuratert innhold igjen.",
+  },
+];
 
 export const MuninnHuginnScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const [isExpanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown" && !isExpanded) {
+        e.preventDefault();
+        e.stopPropagation();
+        setExpanded(true);
+      }
+      if (e.key === "ArrowUp" && isExpanded) {
+        e.preventDefault();
+        e.stopPropagation();
+        setExpanded(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
+  }, [isExpanded]);
 
   const titleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const titleScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });
 
-  // Huginn card
+  // ─── EXPANDED VIEW: Chat dialogue ───
+  if (isExpanded) {
+    return (
+      <AbsoluteFill style={{ background: theme.backgroundGradient, fontFamily: theme.fontFamily }}>
+        <div
+          style={{
+            position: "absolute",
+            top: "3%",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ fontSize: 42, fontWeight: 700, color: theme.text }}>
+            To systemer som{" "}
+            <span style={{ color: theme.primary }}>forbedrer søket sammen</span>
+          </h2>
+        </div>
+
+        <div
+          style={{
+            position: "absolute",
+            top: "12%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: 36,
+            width: 1400,
+            height: "78%",
+          }}
+        >
+          {/* Left: Agent cards */}
+          <div
+            style={{
+              width: 230,
+              display: "flex",
+              flexDirection: "column",
+              gap: 14,
+              paddingTop: 10,
+              flexShrink: 0,
+            }}
+          >
+            <div
+              style={{
+                background: `${theme.accent}08`,
+                border: `1px solid ${theme.accent}25`,
+                borderRadius: 14,
+                padding: "16px 14px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: 28, marginBottom: 4 }}>{"🦅"}</div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: theme.accent }}>Muninn</div>
+              <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 4 }}>
+                AI-plattform — bruker søket via MCP
+              </div>
+            </div>
+
+            <div
+              style={{
+                background: `${theme.primary}08`,
+                border: `1px solid ${theme.primary}25`,
+                borderRadius: 14,
+                padding: "16px 14px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: 28, marginBottom: 4 }}>{"🦅"}</div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: theme.primary }}>Huginn</div>
+              <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 4 }}>
+                Søkemotor — forbedrer basert på feedback
+              </div>
+            </div>
+
+            <div
+              style={{
+                background: `${theme.text}05`,
+                border: `1px solid ${theme.text}15`,
+                borderRadius: 14,
+                padding: "12px 14px",
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: 14, fontWeight: 700, color: theme.text, fontFamily: theme.monoFont }}>
+                MCP
+              </div>
+              <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 4 }}>
+                Koblingen mellom dem
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Chat messages */}
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              overflow: "hidden",
+            }}
+          >
+            {dialogue.map((msg, i) => {
+              const isMuninn = msg.from === "muninn";
+              const color = isMuninn ? theme.accent : theme.primary;
+
+              return (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    justifyContent: isMuninn ? "flex-start" : "flex-end",
+                    animation: "fadeSlideIn 0.3s ease-out both",
+                    animationDelay: `${i * 0.08}s`,
+                  }}
+                >
+                  <div
+                    style={{
+                      maxWidth: 620,
+                      background: `${color}08`,
+                      border: `1px solid ${color}20`,
+                      borderRadius: isMuninn ? "14px 14px 14px 3px" : "14px 14px 3px 14px",
+                      padding: "12px 18px",
+                    }}
+                  >
+                    <div style={{ fontSize: 12, color, fontWeight: 600, marginBottom: 4 }}>
+                      {"🦅"} {isMuninn ? "Muninn" : "Huginn"}
+                    </div>
+                    <div style={{ fontSize: 17, color: theme.text, lineHeight: 1.4 }}>
+                      {msg.text}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Result badge */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 10,
+                animation: "fadeSlideIn 0.4s ease-out both",
+                animationDelay: "0.6s",
+              }}
+            >
+              <div
+                style={{
+                  background: `${theme.success}10`,
+                  border: `1px solid ${theme.success}30`,
+                  borderRadius: 12,
+                  padding: "12px 28px",
+                }}
+              >
+                <span style={{ fontSize: 17, fontWeight: 600, color: theme.success }}>
+                  Agenten designet søkepipelinen som gir best kontekst
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CSS animation + hint */}
+        <style>{`
+          @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+        <div
+          style={{
+            position: "absolute",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            color: theme.textMuted,
+            fontSize: 15,
+            fontFamily: theme.monoFont,
+          }}
+        >
+          ↑ Pil opp for oversikt
+        </div>
+      </AbsoluteFill>
+    );
+  }
+
+  // ─── DEFAULT VIEW: Two raven cards ───
   const huginnDelay = 30;
-  const huginnScale = spring({
-    frame: frame - huginnDelay,
-    fps,
-    config: { damping: 12, stiffness: 120 },
-  });
+  const huginnScale = spring({ frame: frame - huginnDelay, fps, config: { damping: 12, stiffness: 120 } });
   const huginnOpacity = interpolate(frame - huginnDelay, [0, 15], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Muninn card
   const muninnDelay = 50;
-  const muninnScale = spring({
-    frame: frame - muninnDelay,
-    fps,
-    config: { damping: 12, stiffness: 120 },
-  });
+  const muninnScale = spring({ frame: frame - muninnDelay, fps, config: { damping: 12, stiffness: 120 } });
   const muninnOpacity = interpolate(frame - muninnDelay, [0, 15], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Connection
   const connOpacity = interpolate(frame, [70, 90], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -42,19 +263,14 @@ export const MuninnHuginnScene: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Fun fact
-  const funFactOpacity = interpolate(frame, [100, 120], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // Open source badge
-  const osBadgeOpacity = interpolate(frame, [120, 140], [0, 1], {
+  const osBadgeOpacity = interpolate(frame, [100, 120], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   const floatY = Math.sin(frame * 0.03) * 5;
+
+  const hintBounce = Math.sin(frame * 0.1) * 3;
 
   return (
     <AbsoluteFill
@@ -68,7 +284,6 @@ export const MuninnHuginnScene: React.FC = () => {
         padding: 80,
       }}
     >
-      {/* Subtitle */}
       <p
         style={{
           opacity: titleOpacity,
@@ -120,14 +335,7 @@ export const MuninnHuginnScene: React.FC = () => {
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.primary, marginBottom: 8 }}>
             Huginn
           </h3>
-          <p
-            style={{
-              fontSize: 18,
-              color: theme.gold,
-              fontStyle: "italic",
-              marginBottom: 20,
-            }}
-          >
+          <p style={{ fontSize: 18, color: theme.gold, fontStyle: "italic", marginBottom: 20 }}>
             «Tanke»
           </p>
           <p style={{ fontSize: 20, color: theme.textMuted, lineHeight: 1.5, marginBottom: 24 }}>
@@ -209,14 +417,7 @@ export const MuninnHuginnScene: React.FC = () => {
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent, marginBottom: 8 }}>
             Muninn
           </h3>
-          <p
-            style={{
-              fontSize: 18,
-              color: theme.gold,
-              fontStyle: "italic",
-              marginBottom: 20,
-            }}
-          >
+          <p style={{ fontSize: 18, color: theme.gold, fontStyle: "italic", marginBottom: 20 }}>
             «Hukommelse»
           </p>
           <p style={{ fontSize: 20, color: theme.textMuted, lineHeight: 1.5, marginBottom: 24 }}>
@@ -242,27 +443,11 @@ export const MuninnHuginnScene: React.FC = () => {
         </div>
       </div>
 
-      {/* Fun fact */}
-      <p
-        style={{
-          opacity: funFactOpacity,
-          fontSize: 20,
-          color: theme.textMuted,
-          fontStyle: "italic",
-          marginTop: 40,
-          textAlign: "center",
-          maxWidth: 800,
-        }}
-      >
-        Vi brukte Muninn til å spørre Huginn om hvordan søket burde fungere{" "}
-        {"🤯"}
-      </p>
-
       {/* Open source */}
       <div
         style={{
           opacity: osBadgeOpacity,
-          marginTop: 20,
+          marginTop: 40,
           fontFamily: theme.monoFont,
           fontSize: 16,
           color: theme.success,
@@ -273,6 +458,22 @@ export const MuninnHuginnScene: React.FC = () => {
         }}
       >
         Begge prosjektene er open source
+      </div>
+
+      {/* Hint to expand */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 24,
+          left: "50%",
+          transform: `translateX(-50%) translateY(${hintBounce}px)`,
+          color: theme.textMuted,
+          fontSize: 15,
+          fontFamily: theme.monoFont,
+          opacity: osBadgeOpacity,
+        }}
+      >
+        ↓ Pil ned for dialog
       </div>
     </AbsoluteFill>
   );
