@@ -1,44 +1,10 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
+import { Starfield } from "./Starfield";
 
 export const IntroScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // Starfield background
-  const starCount = 50;
-  const cycleDuration = 400;
-  const stars = Array.from({ length: starCount }).map((_, i) => {
-    const angle = (i / starCount) * Math.PI * 2 + i * 0.5;
-    const timeOffset = (i * 7) % cycleDuration;
-    const cycleFrame = (frame + timeOffset) % cycleDuration;
-    const distance = interpolate(cycleFrame, [0, cycleDuration], [0, 1200], { extrapolateRight: "clamp" });
-    const x = Math.cos(angle) * distance;
-    const y = Math.sin(angle) * distance;
-    const size = interpolate(cycleFrame, [0, cycleDuration], [1, 3], { extrapolateRight: "clamp" });
-    const opacity = interpolate(cycleFrame, [0, 20, cycleDuration - 30, cycleDuration], [0, 0.4, 0.4, 0], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    });
-    const colors = ["#ffffff", "#00d4ff", "#a855f7", "#ffffff", "#fbbf24"];
-    return (
-      <div
-        key={i}
-        style={{
-          position: "absolute",
-          left: x,
-          top: y,
-          width: size,
-          height: size,
-          borderRadius: "50%",
-          backgroundColor: colors[i % colors.length],
-          opacity,
-          boxShadow: `0 0 ${size * 2}px ${colors[i % colors.length]}`,
-          pointerEvents: "none",
-        }}
-      />
-    );
-  });
 
   // Title animation
   const titleScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });
@@ -70,8 +36,8 @@ export const IntroScene: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
-  // Event badge
-  const badgeOpacity = interpolate(frame, [90, 110], [0, 1], {
+  // Event badge (appears first, before the title)
+  const badgeOpacity = interpolate(frame, [0, 15], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -88,19 +54,7 @@ export const IntroScene: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      {/* Starfield */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "relative", width: 0, height: 0 }}>{stars}</div>
-      </div>
+      <Starfield />
 
       {/* Content */}
       <div

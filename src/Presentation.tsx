@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { PresentationProvider } from "./remotion-mock";
+import { theme } from "./styles/theme";
 import { IntroScene } from "./components/IntroScene";
 import { ProblemScene } from "./components/ProblemScene";
 import { BlankSlateScene } from "./components/BlankSlateScene";
@@ -204,11 +205,11 @@ export const Presentation: React.FC = () => {
                 padding: "10px 14px",
                 borderRadius: 8,
                 cursor: "pointer",
-                background: i === currentScene ? "#00d4ff15" : "transparent",
-                border: i === currentScene ? "1px solid #00d4ff30" : "1px solid transparent",
+                background: i === currentScene ? `${theme.primary}15` : "transparent",
+                border: i === currentScene ? `1px solid ${theme.primary}30` : "1px solid transparent",
                 marginBottom: 4,
                 fontSize: 15,
-                color: i === currentScene ? "#00d4ff" : "#888",
+                color: i === currentScene ? theme.primary : "#888",
                 fontFamily: "'Inter', sans-serif",
                 transition: "all 0.15s ease",
               }}

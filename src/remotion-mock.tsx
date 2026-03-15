@@ -14,36 +14,40 @@ export const useVideoConfig = () => ({
 
 export const interpolate = (
   input: number,
-  inputRange: [number, number],
-  outputRange: [number, number],
+  inputRange: number[],
+  outputRange: number[],
   options?: {
     extrapolateLeft?: "clamp" | "extend";
     extrapolateRight?: "clamp" | "extend";
   }
 ): number => {
-  const [inputMin, inputMax] = inputRange;
-  const [outputMin, outputMax] = outputRange;
-
-  let result: number;
-
-  if (input <= inputMin) {
+  // Find the segment this input falls into
+  if (input <= inputRange[0]) {
     if (options?.extrapolateLeft === "clamp") {
-      return outputMin;
+      return outputRange[0];
     }
-    const slope = (outputMax - outputMin) / (inputMax - inputMin);
-    result = outputMin + slope * (input - inputMin);
-  } else if (input >= inputMax) {
-    if (options?.extrapolateRight === "clamp") {
-      return outputMax;
-    }
-    const slope = (outputMax - outputMin) / (inputMax - inputMin);
-    result = outputMin + slope * (input - inputMin);
-  } else {
-    const progress = (input - inputMin) / (inputMax - inputMin);
-    result = outputMin + progress * (outputMax - outputMin);
+    const slope = (outputRange[1] - outputRange[0]) / (inputRange[1] - inputRange[0]);
+    return outputRange[0] + slope * (input - inputRange[0]);
   }
 
-  return result;
+  if (input >= inputRange[inputRange.length - 1]) {
+    if (options?.extrapolateRight === "clamp") {
+      return outputRange[outputRange.length - 1];
+    }
+    const last = inputRange.length - 1;
+    const slope = (outputRange[last] - outputRange[last - 1]) / (inputRange[last] - inputRange[last - 1]);
+    return outputRange[last] + slope * (input - inputRange[last]);
+  }
+
+  // Find the right segment
+  for (let i = 1; i < inputRange.length; i++) {
+    if (input <= inputRange[i]) {
+      const progress = (input - inputRange[i - 1]) / (inputRange[i] - inputRange[i - 1]);
+      return outputRange[i - 1] + progress * (outputRange[i] - outputRange[i - 1]);
+    }
+  }
+
+  return outputRange[outputRange.length - 1];
 };
 
 export const spring = ({

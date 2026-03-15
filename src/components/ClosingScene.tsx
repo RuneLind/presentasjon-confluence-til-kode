@@ -1,43 +1,10 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
 import { theme } from "../styles/theme";
+import { Starfield } from "./Starfield";
 
 export const ClosingScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // Starfield
-  const starCount = 40;
-  const cycleDuration = 400;
-  const stars = Array.from({ length: starCount }).map((_, i) => {
-    const angle = (i / starCount) * Math.PI * 2 + i * 0.5;
-    const timeOffset = (i * 7) % cycleDuration;
-    const cycleFrame = (frame + timeOffset) % cycleDuration;
-    const distance = interpolate(cycleFrame, [0, cycleDuration], [0, 1000], { extrapolateRight: "clamp" });
-    const x = Math.cos(angle) * distance;
-    const y = Math.sin(angle) * distance;
-    const size = interpolate(cycleFrame, [0, cycleDuration], [1, 3], { extrapolateRight: "clamp" });
-    const opacity = interpolate(cycleFrame, [0, 20, cycleDuration - 30, cycleDuration], [0, 0.3, 0.3, 0], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    });
-    const colors = ["#ffffff", "#00d4ff", "#a855f7", "#fbbf24"];
-    return (
-      <div
-        key={i}
-        style={{
-          position: "absolute",
-          left: x,
-          top: y,
-          width: size,
-          height: size,
-          borderRadius: "50%",
-          backgroundColor: colors[i % colors.length],
-          opacity,
-          pointerEvents: "none",
-        }}
-      />
-    );
-  });
 
   const quoteOpacity = interpolate(frame, [0, 25], [0, 1], { extrapolateRight: "clamp" });
   const quoteScale = spring({ frame, fps, config: { damping: 14, stiffness: 80 } });
@@ -77,19 +44,7 @@ export const ClosingScene: React.FC = () => {
         padding: 80,
       }}
     >
-      {/* Starfield */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "relative", width: 0, height: 0 }}>{stars}</div>
-      </div>
+      <Starfield count={40} maxDistance={1000} colors={["#ffffff", "#00d4ff", "#a855f7", "#fbbf24"]} />
 
       {/* Main quote */}
       <div
