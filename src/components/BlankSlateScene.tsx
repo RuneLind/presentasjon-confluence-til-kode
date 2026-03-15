@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { CircleHelp, Brain } from "lucide-react";
 import { theme } from "../styles/theme";
 
 export const BlankSlateScene: React.FC = () => {
@@ -75,8 +76,8 @@ export const BlankSlateScene: React.FC = () => {
               padding: 40,
             }}
           >
-            <div style={{ fontSize: 48, marginBottom: 20 }}>
-              {"🤔"}
+            <div style={{ marginBottom: 20 }}>
+              <CircleHelp size={48} color={theme.primary} strokeWidth={1.5} />
             </div>
             <h3 style={{ fontSize: 28, fontWeight: 600, color: theme.primary, marginBottom: 16 }}>
               Som en ny konsulent på første dag
@@ -100,8 +101,8 @@ export const BlankSlateScene: React.FC = () => {
               padding: 40,
             }}
           >
-            <div style={{ fontSize: 48, marginBottom: 20 }}>
-              {"🧠"}
+            <div style={{ marginBottom: 20 }}>
+              <Brain size={48} color={theme.accent} strokeWidth={1.5} />
             </div>
             <h3 style={{ fontSize: 28, fontWeight: 600, color: theme.accent, marginBottom: 16 }}>
               Kontekstvinduet

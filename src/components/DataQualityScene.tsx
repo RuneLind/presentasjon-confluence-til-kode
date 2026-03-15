@@ -1,12 +1,13 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Download, Eraser, Scissors, Tag, Database, Bird, X } from "lucide-react";
 import { theme } from "../styles/theme";
 
 const pipelineSteps = [
-  { icon: "📨", title: "Hent", desc: "Confluence, Notion, Jira" },
-  { icon: "🧹", title: "Rens", desc: "Fjern støy, sensitiv data" },
-  { icon: "✂️", title: "Chunk", desc: "Del opp i søkbare biter" },
-  { icon: "🏷️", title: "Tagg", desc: "50 emner, auto-klassifisert" },
-  { icon: "📊", title: "Indekser", desc: "Vektorembeddings, lokalt" },
+  { Icon: Download, title: "Hent", desc: "Confluence, Notion, Jira" },
+  { Icon: Eraser, title: "Rens", desc: "Fjern støy, sensitiv data" },
+  { Icon: Scissors, title: "Chunk", desc: "Del opp i søkbare biter" },
+  { Icon: Tag, title: "Tagg", desc: "50 emner, auto-klassifisert" },
+  { Icon: Database, title: "Indekser", desc: "Vektorembeddings, lokalt" },
 ];
 
 export const DataQualityScene: React.FC = () => {
@@ -82,7 +83,7 @@ export const DataQualityScene: React.FC = () => {
           marginBottom: 40,
         }}
       >
-        <span style={{ fontSize: 22 }}>{"🦅"}</span>
+        <Bird size={22} color={theme.primary} strokeWidth={1.5} />
         <span style={{ fontSize: 18, color: theme.textMuted }}>
           Huginn — indeksering av kunnskap
         </span>
@@ -157,7 +158,9 @@ export const DataQualityScene: React.FC = () => {
                   minWidth: 190,
                 }}
               >
-                <div style={{ fontSize: 36, marginBottom: 10 }}>{step.icon}</div>
+                <div style={{ marginBottom: 10, display: "flex", justifyContent: "center" }}>
+                  <step.Icon size={36} color={theme.primary} strokeWidth={1.5} />
+                </div>
                 <div
                   style={{
                     fontSize: 22,
@@ -246,7 +249,7 @@ export const DataQualityScene: React.FC = () => {
                   color: theme.textMuted,
                 }}
               >
-                <span style={{ color: theme.secondary }}>{"✗"}</span>
+                <X size={18} color={theme.secondary} strokeWidth={2} />
                 {item}
               </div>
             )

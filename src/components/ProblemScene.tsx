@@ -1,10 +1,11 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { BookOpen, ClipboardList, Code } from "lucide-react";
 import { theme } from "../styles/theme";
 
 const systems = [
-  { name: "Confluence", icon: "📘", desc: "Dokumentasjon, retningslinjer, regelverk", color: "#2684FF" },
-  { name: "Jira", icon: "📋", desc: "Oppgaver, akseptansekriterier, kommentarer", color: "#0052CC" },
-  { name: "Kildekode", icon: "💻", desc: "Implementasjon, tester, konfigurasjon", color: "#27ae60" },
+  { name: "Confluence", Icon: BookOpen, desc: "Dokumentasjon, retningslinjer, regelverk", color: "#2684FF" },
+  { name: "Jira", Icon: ClipboardList, desc: "Oppgaver, akseptansekriterier, kommentarer", color: "#0052CC" },
+  { name: "Kildekode", Icon: Code, desc: "Implementasjon, tester, konfigurasjon", color: "#27ae60" },
 ];
 
 export const ProblemScene: React.FC = () => {
@@ -99,7 +100,9 @@ export const ProblemScene: React.FC = () => {
                 minWidth: 280,
               }}
             >
-              <div style={{ fontSize: 48, marginBottom: 16 }}>{sys.icon}</div>
+              <div style={{ marginBottom: 16, display: "flex", justifyContent: "center" }}>
+                <sys.Icon size={48} color={sys.color} strokeWidth={1.5} />
+              </div>
               <div
                 style={{
                   fontSize: 28,

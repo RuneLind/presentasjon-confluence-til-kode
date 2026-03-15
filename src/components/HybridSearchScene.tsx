@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Brain, Search, Scale } from "lucide-react";
 import { theme } from "../styles/theme";
 
 export const HybridSearchScene: React.FC = () => {
@@ -13,7 +14,7 @@ export const HybridSearchScene: React.FC = () => {
       title: "Semantisk søk",
       desc: "Flerspråklige embeddings som forstår betydning",
       color: theme.primary,
-      icon: "🧠",
+      Icon: Brain,
       example: {
         query: "«Rammeavtaler»",
         match: "«Framework agreements»",
@@ -25,7 +26,7 @@ export const HybridSearchScene: React.FC = () => {
       title: "Nøkkelordsøk",
       desc: "Eksakte termer, artikkelnumre, forkortelser",
       color: theme.success,
-      icon: "🔍",
+      Icon: Search,
       example: {
         query: "«LA_BUC_01»",
         match: "«LA_BUC_01»",
@@ -37,7 +38,7 @@ export const HybridSearchScene: React.FC = () => {
       title: "Cross-encoder reranking",
       desc: "Leser spørring og dokument sammen for presise relevansvurderinger",
       color: theme.accent,
-      icon: "⚖️",
+      Icon: Scale,
       example: {
         query: "Spørring + Dokument",
         match: "Relevansscore",
@@ -116,7 +117,9 @@ export const HybridSearchScene: React.FC = () => {
                 position: "relative",
               }}
             >
-              <div style={{ fontSize: 36, marginBottom: 12 }}>{tech.icon}</div>
+              <div style={{ marginBottom: 12 }}>
+                <tech.Icon size={36} color={tech.color} strokeWidth={1.5} />
+              </div>
               <h3
                 style={{
                   fontSize: 26,

@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Search, Network, Code } from "lucide-react";
 import { theme } from "../styles/theme";
 import { useStepNavigation } from "../hooks/useStepNavigation";
 
@@ -187,9 +188,9 @@ export const TwoThingsScene: React.FC = () => {
           {activeStep >= 1 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
-                { icon: "🔍", label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
-                { icon: "🔗", label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
-                { icon: "💻", label: "Kodesøk", desc: "Fire repoer via Serena" },
+                { Icon: Search, label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
+                { Icon: Network, label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
+                { Icon: Code, label: "Kodesøk", desc: "Fire repoer via Serena" },
               ].map((tool, i) => (
                 <div
                   key={i}
@@ -206,7 +207,7 @@ export const TwoThingsScene: React.FC = () => {
                     transition: `all 0.3s ease-out ${i * 0.1}s`,
                   }}
                 >
-                  <span style={{ fontSize: 28 }}>{tool.icon}</span>
+                  <tool.Icon size={28} color={theme.accent} strokeWidth={1.5} />
                   <div>
                     <div style={{ fontSize: 20, fontWeight: 600, color: theme.text }}>
                       {tool.label}

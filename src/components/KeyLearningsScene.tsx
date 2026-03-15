@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Target, Filter, Plug, Rocket } from "lucide-react";
 import { theme } from "../styles/theme";
 import { useStepNavigation } from "../hooks/useStepNavigation";
 
@@ -8,28 +9,28 @@ const learnings = [
     desc: "Modellen er allerede smart nok. Men fyller du kontekstvinduet med støy, irrelevant innhold eller utdatert dokumentasjon, hjelper det ikke hvor god modellen er.",
     highlight: "Investér i konteksten, ikke bare modellen",
     color: theme.primary,
-    icon: "🎯",
+    Icon: Target,
   },
   {
     title: "Kuratér før du indekserer",
     desc: "Rens, tagg og strukturér. Støy i indeksen = støy i svarene.",
     highlight: "35% av chunks eliminert ved opprydding",
     color: theme.accent,
-    icon: "🧹",
+    Icon: Filter,
   },
   {
     title: "MCP er en game-changer",
     desc: "Åpen standard som lar agenter bruke verktøy på en konsistent måte. Mer effektivt, mer presist, skalerer.",
     highlight: "La agenten hente det den trenger",
     color: theme.success,
-    icon: "🔌",
+    Icon: Plug,
   },
   {
     title: "Start med det som gir mest verdi",
     desc: "For oss: Confluence-dokumentasjon. For andre: Notion, interne wikier, kodesøk.",
     highlight: "Finn kunnskapskilden med størst effekt",
     color: theme.warning,
-    icon: "🚀",
+    Icon: Rocket,
   },
 ];
 
@@ -94,7 +95,7 @@ export const KeyLearningsScene: React.FC = () => {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
-                <span style={{ fontSize: 32 }}>{learning.icon}</span>
+                <learning.Icon size={32} color={isVisible ? learning.color : theme.textMuted} strokeWidth={1.5} />
                 <h3
                   style={{
                     fontSize: 24,

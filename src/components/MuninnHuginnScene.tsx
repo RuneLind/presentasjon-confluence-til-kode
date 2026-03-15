@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Bird } from "lucide-react";
 import { theme } from "../styles/theme";
 
 const dialogue = [
@@ -104,7 +105,7 @@ export const MuninnHuginnScene: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              <div style={{ fontSize: 28, marginBottom: 4 }}>{"🦅"}</div>
+              <div style={{ marginBottom: 4 }}><Bird size={28} color={theme.textMuted} strokeWidth={1.5} /></div>
               <div style={{ fontSize: 20, fontWeight: 700, color: theme.accent }}>Muninn</div>
               <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 4 }}>
                 AI-plattform — bruker søket via MCP
@@ -120,7 +121,7 @@ export const MuninnHuginnScene: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              <div style={{ fontSize: 28, marginBottom: 4 }}>{"🦅"}</div>
+              <div style={{ marginBottom: 4 }}><Bird size={28} color={theme.textMuted} strokeWidth={1.5} /></div>
               <div style={{ fontSize: 20, fontWeight: 700, color: theme.primary }}>Huginn</div>
               <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 4 }}>
                 Søkemotor — forbedrer basert på feedback
@@ -179,7 +180,7 @@ export const MuninnHuginnScene: React.FC = () => {
                     }}
                   >
                     <div style={{ fontSize: 12, color, fontWeight: 600, marginBottom: 4 }}>
-                      {"🦅"} {isMuninn ? "Muninn" : "Huginn"}
+                      <Bird size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} /> {isMuninn ? "Muninn" : "Huginn"}
                     </div>
                     <div style={{ fontSize: 17, color: theme.text, lineHeight: 1.4 }}>
                       {msg.text}
@@ -331,7 +332,9 @@ export const MuninnHuginnScene: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 56, marginBottom: 16 }}>{"🦅"}</div>
+          <div style={{ marginBottom: 16, display: "flex", justifyContent: "center" }}>
+            <Bird size={56} color={theme.textMuted} strokeWidth={1.5} />
+          </div>
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.primary, marginBottom: 8 }}>
             Huginn
           </h3>
@@ -413,7 +416,9 @@ export const MuninnHuginnScene: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: 56, marginBottom: 16 }}>{"🦅"}</div>
+          <div style={{ marginBottom: 16, display: "flex", justifyContent: "center" }}>
+            <Bird size={56} color={theme.textMuted} strokeWidth={1.5} />
+          </div>
           <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent, marginBottom: 8 }}>
             Muninn
           </h3>

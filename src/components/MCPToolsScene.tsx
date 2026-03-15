@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Library, Network, Code } from "lucide-react";
 import { theme } from "../styles/theme";
 
 const tools = [
@@ -6,7 +7,7 @@ const tools = [
     name: "Kunnskapssøk",
     desc: "Kuraterte Confluence-dokumenter og Jira-saker via hybrid søkepipeline",
     example: "«Hva er reglene for årsavregning?»",
-    icon: "📚",
+    Icon: Library,
     color: theme.primary,
     tags: ["Confluence", "Jira", "Hybrid søk"],
   },
@@ -14,7 +15,7 @@ const tools = [
     name: "Kunnskapsgraf",
     desc: "Strukturerte relasjoner i domenet. Deterministiske svar, ingen hallusinasjon.",
     example: "«Hvilke SEDer tilhører LA_BUC_01?»",
-    icon: "🔗",
+    Icon: Network,
     color: theme.accent,
     tags: ["Regex", "Entiteter", "Deterministisk"],
   },
@@ -22,7 +23,7 @@ const tools = [
     name: "Kodesøk",
     desc: "Kildekode i fire repoer via Serena MCP. Implementasjoner, tester, konfigurasjon.",
     example: "«Hvor er lovvalgshåndteringen implementert?»",
-    icon: "💻",
+    Icon: Code,
     color: theme.success,
     tags: ["Serena", "4 repoer", "On-demand"],
   },
@@ -117,7 +118,7 @@ export const MCPToolsScene: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                {tool.icon}
+                <tool.Icon size={36} color={tool.color} strokeWidth={1.5} />
               </div>
 
               {/* Content */}

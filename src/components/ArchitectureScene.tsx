@@ -1,4 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
+import { Globe, Brain, MessageSquare, Rocket, ChevronRight } from "lucide-react";
 import { theme } from "../styles/theme";
 import { useStepNavigation } from "../hooks/useStepNavigation";
 
@@ -7,7 +8,7 @@ const phases = [
     num: "1",
     title: "Fang oppgaven",
     desc: "Chrome-extension leser Jira-siden direkte fra nettleseren. Ingen API-nøkler.",
-    icon: "🌐",
+    Icon: Globe,
     color: theme.primary,
     detail: "DOM → Markdown → Muninn",
   },
@@ -15,7 +16,7 @@ const phases = [
     num: "2",
     title: "Analysér med AI",
     desc: "Agenten søker automatisk i tre kunnskapskilder via MCP-verktøy.",
-    icon: "🧠",
+    Icon: Brain,
     color: theme.accent,
     detail: "Dokumentasjon + Graf + Kode",
   },
@@ -23,7 +24,7 @@ const phases = [
     num: "3",
     title: "Innsikt i chatten",
     desc: "Sanntidsanalyse med oppfølgingsspørsmål. Se hvilke søk som gjøres.",
-    icon: "💬",
+    Icon: MessageSquare,
     color: theme.success,
     detail: "Streaming + samtalehistorikk",
   },
@@ -31,7 +32,7 @@ const phases = [
     num: "4",
     title: "Fra innsikt til handling",
     desc: "Samtalen destilleres til et arbeidsdokument for kode-agenten.",
-    icon: "🚀",
+    Icon: Rocket,
     color: theme.warning,
     detail: "Kontekst → Implementering",
   },
@@ -90,7 +91,7 @@ export const ArchitectureScene: React.FC = () => {
                     transition: "color 0.3s ease-out",
                   }}
                 >
-                  {"▶"}
+                  <ChevronRight size={20} />
                 </div>
               )}
 
@@ -107,7 +108,9 @@ export const ArchitectureScene: React.FC = () => {
                   boxShadow: isActive ? `0 0 30px ${phase.color}20` : "none",
                 }}
               >
-                <div style={{ fontSize: 40, marginBottom: 12 }}>{phase.icon}</div>
+                <div style={{ marginBottom: 12, display: "flex", justifyContent: "center" }}>
+                  <phase.Icon size={40} color={phase.color} strokeWidth={1.5} />
+                </div>
                 <div
                   style={{
                     fontSize: 16,
