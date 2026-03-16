@@ -1,5 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { Globe, Brain, MessageSquare, Rocket, ChevronRight, FileText, Search, Network, Code } from "lucide-react";
+import { Globe, Brain, MessageSquare, Rocket, ChevronRight, FileText } from "lucide-react";
 import { theme } from "../styles/theme";
 import { useStepNavigation } from "../hooks/useStepNavigation";
 
@@ -216,83 +216,123 @@ const Phase1Detail: React.FC = () => (
         animation: "detailFadeIn 0.3s ease-out 0.35s both",
       }}
     >
-      {`# MELOSYS-7588
-Status: Under utvikling
-Type: Deloppgave | Assignee: Rune
+{`MELOSYS-7588: Utvid datamodell for
+trygdeavgiftsperioder til å støtte
+flere grunnlagsperioder
 
-## Beskrivelse
-Utvid datamodell for trygdeavgifts-
-perioder til å støtte flere…
+Status: Utvikle og teste
+Type: Deloppgave | Assignee: Rune Lind
+Reporter: Francois Allix
 
-## Kommentarer
-### Per (15. jan)
-Sjekk også edge caset med…`}
+Description
+Tidligere har hver trygdeavgiftsperiode
+hatt ett unikt grunnlag. Nå er det behov
+for å støtte flere slike perioder, siden
+25 %-regelen kan medføre at avgifts-
+perioden baserer seg på flere grunnlag.`}
     </div>
   </div>
 );
 
-const Phase2Detail: React.FC = () => {
-  const tools = [
-    {
-      Icon: Search,
-      name: "Kunnskapssøk",
-      query: "«årsavregning regler unntak»",
-      result: "3 treff — beste: Rutiner for årsavregning (0.91)",
-      color: theme.primary,
-    },
-    {
-      Icon: Network,
-      name: "Kunnskapsgraf",
-      query: "«LA_BUC_01»",
-      result: "Direkte svar: 4 SEDer tilhører denne BUCen",
-      color: theme.accent,
-    },
-    {
-      Icon: Code,
-      name: "Kodesøk",
-      query: "«lovvalgshåndtering implementasjon»",
-      result: "LovvalgService.kt linje 42–89 i melosys-api",
-      color: theme.success,
-    },
-  ];
+const toolCalls = [
+  { type: "search", text: "trygdeavgiftsperiode grunnlag datamodell", time: "208ms" },
+  { type: "search", text: "25-prosent-regelen trygdeavgift beregning", time: "293ms" },
+  { type: "search", text: "MELOSYS-7588 trygdeavgift datamodell grunnlagsperioder", time: "371ms" },
+  { type: "load", text: "MELOSYS-7588_Utvid_datamodell_for_trygdeavgiftsperioder.md", time: "28ms" },
+  { type: "load", text: "MELOSYS-7464_Støtte_til_25%_regelen_og_minstebeløpet.md", time: "132ms" },
+  { type: "load", text: "Team MELOSYS/Informasjonsarkitektur/Fysiske database modellen.md", time: "187ms" },
+  { type: "search", text: "MELOSYS-7588 epic deloppgave subtask", time: "360ms" },
+];
 
-  return (
-    <div style={{ display: "flex", gap: 16 }}>
-      {tools.map((tool, i) => (
-        <div
-          key={i}
-          style={{
-            flex: 1,
-            background: `${tool.color}08`,
-            border: `1px solid ${tool.color}20`,
-            borderRadius: 14,
-            padding: "18px 20px",
-            animation: `detailFadeIn 0.3s ease-out ${0.1 + i * 0.12}s both`,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-            <tool.Icon size={20} color={tool.color} strokeWidth={1.5} />
-            <span style={{ fontSize: 16, fontWeight: 700, color: tool.color }}>{tool.name}</span>
-          </div>
+const Phase2Detail: React.FC = () => (
+  <div
+    style={{
+      background: "#12121f",
+      border: `1px solid ${theme.text}12`,
+      borderRadius: 14,
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
+    {/* Chat header */}
+    <div
+      style={{
+        padding: "12px 20px",
+        borderBottom: `1px solid ${theme.text}10`,
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        animation: "detailFadeIn 0.3s ease-out both",
+      }}
+    >
+      <span style={{ fontSize: 12, fontWeight: 800, color: theme.accent, fontFamily: theme.monoFont, letterSpacing: 1 }}>
+        JIRA RESEARCH
+      </span>
+      <span style={{ fontSize: 14, color: theme.text, fontWeight: 600 }}>
+        MELOSYS-7588: Utvid datamodell for trygdeavgiftsperioder
+      </span>
+    </div>
+
+    {/* Tool usage summary */}
+    <div style={{ padding: "10px 20px" }}>
+      <div
+        style={{
+          fontSize: 13,
+          color: theme.textMuted,
+          marginBottom: 10,
+          animation: "detailFadeIn 0.3s ease-out 0.1s both",
+        }}
+      >
+        Used 12 tools · 109.4s ▼
+      </div>
+
+      {/* Tool call log */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        {toolCalls.map((call, i) => (
           <div
+            key={i}
             style={{
+              fontSize: 12,
               fontFamily: theme.monoFont,
-              fontSize: 13,
-              color: theme.text,
-              background: `${tool.color}10`,
-              padding: "8px 12px",
-              borderRadius: 8,
-              marginBottom: 8,
+              color: call.type === "search" ? `${theme.primary}aa` : `${theme.success}aa`,
+              fontStyle: "italic",
+              animation: `detailFadeIn 0.2s ease-out ${0.15 + i * 0.06}s both`,
             }}
           >
-            {tool.query}
+            {call.type === "search" ? "Searching knowledge base" : "Loading document"}:{" "}
+            <span style={{ color: theme.textMuted }}>{call.text}</span>
+            <span style={{ color: `${theme.text}30`, marginLeft: 6 }}>· {call.time}</span>
           </div>
-          <div style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.4 }}>{tool.result}</div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  );
-};
+
+    {/* Analysis result preview */}
+    <div
+      style={{
+        margin: "8px 20px 16px",
+        background: `${theme.accent}08`,
+        border: `1px solid ${theme.accent}15`,
+        borderRadius: 10,
+        padding: "14px 18px",
+        animation: `detailFadeIn 0.3s ease-out ${0.15 + toolCalls.length * 0.06 + 0.1}s both`,
+      }}
+    >
+      <div style={{ fontSize: 15, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
+        MELOSYS-7588: Analyse
+      </div>
+      <div style={{ fontSize: 13, fontWeight: 600, color: theme.textMuted, marginBottom: 4 }}>
+        Hva oppgaven handler om
+      </div>
+      <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.5 }}>
+        Dette er en <span style={{ fontWeight: 700, color: theme.text }}>datamodellendring</span> i{" "}
+        <span style={{ fontFamily: theme.monoFont, fontSize: 12, color: theme.accent }}>melosys-api</span>{" "}
+        som er nødvendig for å støtte <span style={{ fontWeight: 700, color: theme.text }}>25%-regelen</span> i trygdeavgiftsberegning.
+      </div>
+    </div>
+  </div>
+);
 
 const Phase3Detail: React.FC = () => {
   const messages = [
