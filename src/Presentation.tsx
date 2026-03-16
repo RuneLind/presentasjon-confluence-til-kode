@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { PresentationProvider } from "./remotion-mock";
 import { theme } from "./styles/theme";
 import { IntroScene } from "./components/IntroScene";
+import { ContextScene } from "./components/ContextScene";
 import { ProblemScene } from "./components/ProblemScene";
 import { BlankSlateScene } from "./components/BlankSlateScene";
 import { TwoThingsScene } from "./components/TwoThingsScene";
@@ -15,6 +16,7 @@ import { ClosingScene } from "./components/ClosingScene";
 
 const scenes: Array<{ name: string; component: React.FC }> = [
   { name: "Intro", component: IntroScene },
+  { name: "Melosys", component: ContextScene },
   { name: "Problemet", component: ProblemScene },
   { name: "Blankt ark", component: BlankSlateScene },
   { name: "To ting", component: TwoThingsScene },
