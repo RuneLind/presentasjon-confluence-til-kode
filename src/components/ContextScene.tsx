@@ -23,8 +23,8 @@ const domainFacts = [
   },
   {
     Icon: Database,
-    title: "7 kodebaser, ~500k linjer kode, 20+ integrasjoner",
-    desc: "Backend, frontend, EESSI, trygdeavgift, fakturering, brev og E2E-tester",
+    title: "11 kodebaser, ~500k linjer kode, 20+ integrasjoner",
+    desc: "Backend, frontend, EESSI, trygdeavgift, fakturering, brev, mock, skjema, inngangsvilkår og E2E-tester",
     color: theme.warning,
   },
 ];
