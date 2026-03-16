@@ -56,7 +56,7 @@ export const BlankSlateScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Agentens grunnproblem
+        Blankt ark, hver gang
       </h2>
 
       <div style={{ display: "flex", gap: 60, alignItems: "flex-start", maxWidth: 1400 }}>
@@ -83,10 +83,10 @@ export const BlankSlateScene: React.FC = () => {
               Som en ny konsulent på første dag
             </h3>
             <p style={{ fontSize: 22, color: theme.textMuted, lineHeight: 1.6 }}>
-              Uansett hvor smart vedkommende er — uten kontekst om prosjektet, domenet og teamet sitter de bare og ser på en tom skjerm.
+              Uansett hvor smart konsulenten er, uten kontekst om prosjektet, domenet og teamet sitter de bare og ser på en tom skjerm.
             </p>
             <p style={{ fontSize: 22, color: theme.text, lineHeight: 1.6, marginTop: 16 }}>
-              En AI-agent har nøyaktig samme problem.
+              En AI-agent har det samme problemet.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export const BlankSlateScene: React.FC = () => {
                 />
               </div>
               <div style={{ fontSize: 14, color: theme.textMuted, marginTop: 8 }}>
-                Fyll den riktig — ikke med alt
+                Fyll det riktig, ikke med alt
               </div>
             </div>
           </div>

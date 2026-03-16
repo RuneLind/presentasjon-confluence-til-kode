@@ -6,7 +6,7 @@ import { useStepNavigation } from "../hooks/useStepNavigation";
 const phases = [
   {
     num: "1",
-    title: "Fang oppgaven",
+    title: "Hent oppgaven",
     desc: "Chrome-extension leser Jira-siden direkte fra nettleseren. Ingen API-nøkler.",
     Icon: Globe,
     color: theme.primary,
@@ -68,7 +68,7 @@ export const ArchitectureScene: React.FC = () => {
           marginBottom: 60,
         }}
       >
-        Arkitekturen: fire faser
+        Arbeidsflyten i fire steg
       </h2>
 
       <div style={{ display: "flex", gap: 24, maxWidth: 1600, width: "100%" }}>

@@ -18,7 +18,7 @@ const scenes: Array<{ name: string; component: React.FC }> = [
   { name: "Problemet", component: ProblemScene },
   { name: "Blankt ark", component: BlankSlateScene },
   { name: "To ting", component: TwoThingsScene },
-  { name: "Arkitektur", component: ArchitectureScene },
+  { name: "Arbeidsflyt", component: ArchitectureScene },
   { name: "Datakvalitet", component: DataQualityScene },
   { name: "Hybrid søk", component: HybridSearchScene },
   { name: "MCP-verktøy", component: MCPToolsScene },
