@@ -334,105 +334,200 @@ const Phase2Detail: React.FC = () => (
   </div>
 );
 
-const Phase3Detail: React.FC = () => {
-  const messages = [
-    { from: "agent", text: "Søker i kunnskapsbasen etter «årsavregning»…", tool: "search_knowledge" },
-    { from: "system", text: "3 treff — viser beste resultat (brief=true)", tool: null },
-    { from: "agent", text: "Henter fullt dokument: Rutiner for årsavregning", tool: "get_document" },
-    { from: "user", text: "Sjekk også om det finnes relevante tester", tool: null },
-    { from: "agent", text: "Søker i kode: «årsavregning test»", tool: "call_tool → search" },
-  ];
-
-  return (
+const Phase3Detail: React.FC = () => (
+  <div
+    style={{
+      background: "#12121f",
+      border: `1px solid ${theme.text}12`,
+      borderRadius: 14,
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      gap: 0,
+    }}
+  >
+    {/* User message 1: Code investigation */}
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        gap: 8,
-        background: `${theme.text}03`,
-        border: `1px solid ${theme.text}10`,
-        borderRadius: 14,
-        padding: "16px 20px",
+        justifyContent: "flex-end",
+        padding: "14px 20px 8px",
+        animation: "detailFadeIn 0.3s ease-out both",
       }}
     >
-      {messages.map((msg, i) => {
-        const isUser = msg.from === "user";
-        const isSystem = msg.from === "system";
-        const color = isUser ? theme.gold : isSystem ? theme.success : theme.accent;
-
-        return (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "8px 14px",
-              background: isUser ? `${color}08` : "transparent",
-              borderRadius: 10,
-              animation: `detailFadeIn 0.25s ease-out ${0.05 + i * 0.08}s both`,
-            }}
-          >
-            <span style={{ fontSize: 13, fontWeight: 600, color, minWidth: 50, fontFamily: theme.monoFont }}>
-              {isUser ? "Du" : isSystem ? "→" : "Agent"}
-            </span>
-            <span style={{ fontSize: 15, color: theme.textMuted, flex: 1 }}>{msg.text}</span>
-            {msg.tool && (
-              <span
-                style={{
-                  fontFamily: theme.monoFont,
-                  fontSize: 12,
-                  color: theme.accent,
-                  background: `${theme.accent}15`,
-                  padding: "3px 10px",
-                  borderRadius: 6,
-                  flexShrink: 0,
-                }}
-              >
-                {msg.tool}
-              </span>
-            )}
-          </div>
-        );
-      })}
+      <div
+        style={{
+          background: "#1e3a5f",
+          borderRadius: "14px 14px 4px 14px",
+          padding: "10px 16px",
+          maxWidth: "70%",
+        }}
+      >
+        <div style={{ fontSize: 13, color: theme.text, lineHeight: 1.4 }}>
+          Basert på Jira-analysen over, undersøk relevant kode i kodebasen. Finn filene og funksjonene som må endres, og gi en vurdering av kompleksitet og hva som er uklart eller usikkert — uten detaljerte kodeforslag.
+        </div>
+        <div style={{ fontSize: 11, color: theme.textMuted, marginTop: 4 }}>1:00:13 PM</div>
+      </div>
     </div>
-  );
-};
+
+    {/* Agent response 1: Code analysis */}
+    <div style={{ padding: "6px 20px", animation: "detailFadeIn 0.3s ease-out 0.12s both" }}>
+      <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>Used 32 tools · 208.8s ▲</div>
+      <div
+        style={{
+          background: `${theme.accent}08`,
+          border: `1px solid ${theme.accent}15`,
+          borderRadius: 10,
+          padding: "12px 16px",
+        }}
+      >
+        <div style={{ fontSize: 14, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
+          MELOSYS-7588: Kodebaseanalyse
+        </div>
+        <div style={{ fontSize: 13, fontWeight: 600, color: theme.text, marginBottom: 4 }}>
+          Det kritiske funnet: Problemet eksisterer allerede i dag
+        </div>
+        <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.5, marginBottom: 10 }}>
+          I{" "}
+          <span style={{ fontFamily: theme.monoFont, color: theme.accent, fontSize: 11 }}>BeregningService</span>{" "}
+          er 25%-regellogikken allerede implementert — men den mister grunnlaginformasjon når perioder slås sammen.
+        </div>
+
+        {/* Fade-out indicating more content below */}
+        <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.5, opacity: 0.5 }}>
+          Samme mønster i{" "}
+          <span style={{ fontFamily: theme.monoFont, fontSize: 11 }}>opprettBegrensetAvgiftResponseForPeriode</span>{" "}
+          og{" "}
+          <span style={{ fontFamily: theme.monoFont, fontSize: 11 }}>opprettMisjonærBegrensetAvgiftResponse</span>.
+          Altså: beregningsservicen slår allerede sammen N perioder til én…
+        </div>
+        <div
+          style={{
+            height: 24,
+            background: "linear-gradient(to bottom, transparent, #12121f)",
+            marginTop: -24,
+            position: "relative",
+          }}
+        />
+      </div>
+    </div>
+
+    {/* User message 2: Estimate */}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: "10px 20px 8px",
+        animation: "detailFadeIn 0.3s ease-out 0.24s both",
+      }}
+    >
+      <div
+        style={{
+          background: "#1e3a5f",
+          borderRadius: "14px 14px 4px 14px",
+          padding: "10px 16px",
+          maxWidth: "70%",
+        }}
+      >
+        <div style={{ fontSize: 14, color: theme.text, lineHeight: 1.4 }}>
+          Kan du estimere hvor mye jobb dette er? Ta med usikkerhet i estimatet
+        </div>
+        <div style={{ fontSize: 11, color: theme.textMuted, marginTop: 4 }}>9:42:38 PM</div>
+      </div>
+    </div>
+
+    {/* Agent response 2: Estimate */}
+    <div style={{ padding: "6px 20px 14px", animation: "detailFadeIn 0.3s ease-out 0.36s both" }}>
+      <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>Used 0 tools ▲</div>
+      <div
+        style={{
+          background: `${theme.accent}08`,
+          border: `1px solid ${theme.accent}15`,
+          borderRadius: 10,
+          padding: "12px 16px",
+        }}
+      >
+        <div style={{ fontSize: 14, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
+          Estimat: MELOSYS-7588
+        </div>
+        <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.6 }}>
+          <div>• <span style={{ fontWeight: 600, color: theme.text }}>Optimistisk:</span> ~3 dager</div>
+          <div>• <span style={{ fontWeight: 600, color: theme.text }}>Realistisk:</span> 5–7 dager</div>
+          <div>• <span style={{ fontWeight: 600, color: theme.text }}>Pessimistisk:</span> 10+ dager</div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 const Phase4Detail: React.FC = () => (
   <div style={{ display: "flex", gap: 24, alignItems: "stretch" }}>
-    {/* Work document */}
+    {/* Work document content */}
     <div
       style={{
         flex: 2,
-        background: `${theme.text}05`,
-        border: `1px solid ${theme.text}15`,
+        background: `${theme.accent}08`,
+        border: `1px solid ${theme.accent}15`,
         borderRadius: 14,
-        padding: "20px 24px",
-        fontFamily: theme.monoFont,
-        fontSize: 13,
-        color: theme.textMuted,
-        lineHeight: 1.7,
-        whiteSpace: "pre",
+        overflow: "hidden",
+        position: "relative",
         animation: "detailFadeIn 0.3s ease-out 0.1s both",
       }}
     >
-      {`# MELOSYS-7921: Fiks årsavregning
+      {/* Fade-in at top showing there's more above */}
+      <div
+        style={{
+          height: 28,
+          background: `linear-gradient(to bottom, ${theme.accent}08, transparent)`,
+          position: "relative",
+          zIndex: 1,
+        }}
+      />
+      <div style={{ padding: "0 20px", opacity: 0.35, fontSize: 12, color: theme.textMuted, lineHeight: 1.5, marginBottom: 8 }}>
+        …Samme mønster i opprettBegrensetAvgiftResponseForPeriode og opprettMisjonær…
+      </div>
 
-## Oppgave
-Bug i årsavregning ved statusendring…
+      <div style={{ padding: "0 20px 16px" }}>
+        {/* Low uncertainty */}
+        <div style={{ fontSize: 14, fontWeight: 700, color: theme.success, marginBottom: 6 }}>
+          Lav usikkerhet
+        </div>
+        <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
+          <div>• Selve DB-skjemaendringen og Flyway er godt forstått</div>
+          <div>• BeregningService-endringene er mekaniske</div>
+        </div>
 
-## Forskningsfunn
-Rutiner for årsavregning (Confluence)
-Artikkel 13 — forordning 883/2004
+        {/* High uncertainty */}
+        <div style={{ fontSize: 14, fontWeight: 700, color: theme.secondary, marginBottom: 6 }}>
+          Høy usikkerhet
+        </div>
+        <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
+          <div style={{ marginBottom: 4 }}>
+            • <span style={{ fontWeight: 600, color: theme.text }}>TrygdeavgiftperiodeErstatter</span> — Uklart om matchingslogikken trenger liten justering eller er fundamentalt feil. Kan ta 1–3 ekstra dager.
+          </div>
+          <div style={{ marginBottom: 4 }}>
+            • <span style={{ fontWeight: 600, color: theme.text }}>API-kontrakten mellom repoene</span> — Endring i JSON-struktur krever koordinert deploy. Vanskelig å oppdage uten integrasjonstest.
+          </div>
+          <div style={{ marginBottom: 4 }}>
+            • <span style={{ fontWeight: 600, color: theme.text }}>Eksisterende data i prod</span> — Kvaliteten på dagens FK-data og inkonsistent tilstand påvirker migrasjonsjobben.
+          </div>
+        </div>
 
-## Kodeanalyse
-AarsavregningService.kt:166–201  ⭐⭐
-AarsavregningController.kt:42   ⭐
-3 eksisterende tester funnet
-
-## Åpne spørsmål
-Er NPE-en en backend-feil?`}
+        {/* Recommendation */}
+        <div
+          style={{
+            background: `${theme.warning}10`,
+            border: `1px solid ${theme.warning}20`,
+            borderRadius: 10,
+            padding: "10px 14px",
+          }}
+        >
+          <div style={{ fontSize: 13, fontWeight: 700, color: theme.warning, marginBottom: 4 }}>Anbefaling</div>
+          <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.5 }}>
+            Avklar API-kontrakt, trygdedekning i UI og matchingsstrategi før du starter koding — de blokkerer hver sin del og er billige å avklare tidlig, dyre å avklare sent.
+          </div>
+        </div>
+      </div>
     </div>
 
     {/* Arrow + explanation */}
@@ -471,7 +566,7 @@ Er NPE-en en backend-feil?`}
         animation: "detailFadeIn 0.3s ease-out 0.35s both",
       }}
     >
-      <div style={{ fontSize: 18, fontWeight: 700, color: theme.warning }}>Claude Code</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.warning }}>Kodeagenten</div>
       <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5 }}>
         Starter implementering med komplett kontekst — domene, kode og åpne spørsmål samlet i ett dokument.
       </div>
