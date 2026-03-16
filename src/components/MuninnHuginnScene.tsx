@@ -294,7 +294,7 @@ export const MuninnHuginnScene: React.FC = () => {
           marginBottom: 10,
         }}
       >
-        Odins to ravner fra norrøn mytologi
+        Oppkalt etter Odins to ravner fra norrøn mytologi
       </p>
 
       <h2
@@ -307,7 +307,7 @@ export const MuninnHuginnScene: React.FC = () => {
           marginBottom: 60,
         }}
       >
-        Muninn & Huginn
+        To prosjekter som driver alt dette
       </h2>
 
       <div
