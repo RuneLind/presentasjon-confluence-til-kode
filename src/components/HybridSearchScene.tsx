@@ -76,7 +76,7 @@ export const HybridSearchScene: React.FC = () => {
           marginBottom: 20,
         }}
       >
-        Hybrid søk
+        Slik søker agenten
       </h2>
 
       <p
@@ -87,7 +87,7 @@ export const HybridSearchScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Hvorfor étt søk ikke er nok
+        Semantisk søk forstår mening på tvers av språk, men bommer på koder og forkortelser
       </p>
 
       <div style={{ display: "flex", gap: 30, maxWidth: 1500, width: "100%" }}>

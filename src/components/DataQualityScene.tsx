@@ -70,7 +70,7 @@ export const DataQualityScene: React.FC = () => {
           marginBottom: 12,
         }}
       >
-        Datakvalitet er alt
+        Slik bygger vi kunnskapsbasen
       </h2>
 
       {/* Huginn badge */}
