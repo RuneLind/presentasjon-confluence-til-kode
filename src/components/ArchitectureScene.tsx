@@ -43,7 +43,7 @@ const Phase1Detail: React.FC = () => (
       style={{
         flex: 1,
         position: "relative",
-        animation: "detailFadeIn 0.3s ease-out both",
+        animation: "detailFadeIn 0.6s ease-out both",
       }}
     >
       {/* Simplified Jira page background */}
@@ -130,7 +130,7 @@ const Phase1Detail: React.FC = () => (
             borderRadius: 12,
             padding: "18px 20px",
             boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-            animation: "detailFadeIn 0.4s ease-out 0.15s both",
+            animation: "detailFadeIn 0.8s ease-out 0.3s both",
           }}
         >
           <div style={{ fontSize: 16, fontWeight: 700, color: theme.primary, marginBottom: 12 }}>
@@ -192,7 +192,7 @@ const Phase1Detail: React.FC = () => (
         alignItems: "center",
         gap: 6,
         flexShrink: 0,
-        animation: "detailFadeIn 0.3s ease-out 0.25s both",
+        animation: "detailFadeIn 0.6s ease-out 0.5s both",
       }}
     >
       <div style={{ fontFamily: theme.monoFont, fontSize: 12, color: theme.textMuted }}>DOM → Markdown</div>
@@ -213,7 +213,7 @@ const Phase1Detail: React.FC = () => (
         color: theme.textMuted,
         lineHeight: 1.7,
         whiteSpace: "pre",
-        animation: "detailFadeIn 0.3s ease-out 0.35s both",
+        animation: "detailFadeIn 0.6s ease-out 0.7s both",
       }}
     >
 {`MELOSYS-7588: Utvid datamodell for
@@ -263,7 +263,7 @@ const Phase2Detail: React.FC = () => (
         display: "flex",
         alignItems: "center",
         gap: 10,
-        animation: "detailFadeIn 0.3s ease-out both",
+        animation: "detailFadeIn 0.6s ease-out both",
       }}
     >
       <span style={{ fontSize: 12, fontWeight: 800, color: theme.accent, fontFamily: theme.monoFont, letterSpacing: 1 }}>
@@ -281,7 +281,7 @@ const Phase2Detail: React.FC = () => (
           fontSize: 13,
           color: theme.textMuted,
           marginBottom: 10,
-          animation: "detailFadeIn 0.3s ease-out 0.1s both",
+          animation: "detailFadeIn 0.6s ease-out 0.1s both",
         }}
       >
         Used 12 tools · 109.4s ▼
@@ -297,7 +297,7 @@ const Phase2Detail: React.FC = () => (
               fontFamily: theme.monoFont,
               color: call.type === "search" ? `${theme.primary}aa` : `${theme.success}aa`,
               fontStyle: "italic",
-              animation: `detailFadeIn 0.2s ease-out ${0.15 + i * 0.06}s both`,
+              animation: `detailFadeIn 0.5s ease-out ${0.3 + i * 0.12}s both`,
             }}
           >
             {call.type === "search" ? "Searching knowledge base" : "Loading document"}:{" "}
@@ -316,7 +316,7 @@ const Phase2Detail: React.FC = () => (
         border: `1px solid ${theme.accent}15`,
         borderRadius: 10,
         padding: "14px 18px",
-        animation: `detailFadeIn 0.3s ease-out ${0.15 + toolCalls.length * 0.06 + 0.1}s both`,
+        animation: `detailFadeIn 0.6s ease-out ${0.3 + toolCalls.length * 0.12 + 0.2}s both`,
       }}
     >
       <div style={{ fontSize: 15, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
@@ -352,7 +352,7 @@ const Phase3Detail: React.FC = () => (
         display: "flex",
         justifyContent: "flex-end",
         padding: "14px 20px 8px",
-        animation: "detailFadeIn 0.3s ease-out both",
+        animation: "detailFadeIn 0.6s ease-out both",
       }}
     >
       <div
@@ -371,7 +371,7 @@ const Phase3Detail: React.FC = () => (
     </div>
 
     {/* Agent response 1: Code analysis */}
-    <div style={{ padding: "6px 20px", animation: "detailFadeIn 0.3s ease-out 0.12s both" }}>
+    <div style={{ padding: "6px 20px", animation: "detailFadeIn 0.6s ease-out 0.25s both" }}>
       <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>Used 32 tools · 208.8s ▲</div>
       <div
         style={{
@@ -418,7 +418,7 @@ const Phase3Detail: React.FC = () => (
         display: "flex",
         justifyContent: "flex-end",
         padding: "10px 20px 8px",
-        animation: "detailFadeIn 0.3s ease-out 0.24s both",
+        animation: "detailFadeIn 0.6s ease-out 0.5s both",
       }}
     >
       <div
@@ -437,7 +437,7 @@ const Phase3Detail: React.FC = () => (
     </div>
 
     {/* Agent response 2: Estimate */}
-    <div style={{ padding: "6px 20px 14px", animation: "detailFadeIn 0.3s ease-out 0.36s both" }}>
+    <div style={{ padding: "6px 20px 14px", animation: "detailFadeIn 0.6s ease-out 0.7s both" }}>
       <div style={{ fontSize: 12, color: theme.textMuted, marginBottom: 6 }}>Used 0 tools ▲</div>
       <div
         style={{
@@ -471,7 +471,7 @@ const Phase4Detail: React.FC = () => (
         borderRadius: 14,
         overflow: "hidden",
         position: "relative",
-        animation: "detailFadeIn 0.3s ease-out 0.1s both",
+        animation: "detailFadeIn 0.6s ease-out 0.1s both",
       }}
     >
       {/* Fade-in at top showing there's more above */}
@@ -539,7 +539,7 @@ const Phase4Detail: React.FC = () => (
         justifyContent: "center",
         gap: 12,
         flexShrink: 0,
-        animation: "detailFadeIn 0.3s ease-out 0.25s both",
+        animation: "detailFadeIn 0.6s ease-out 0.5s both",
       }}
     >
       <FileText size={28} color={theme.warning} strokeWidth={1.5} />
@@ -563,7 +563,7 @@ const Phase4Detail: React.FC = () => (
         flexDirection: "column",
         justifyContent: "center",
         gap: 14,
-        animation: "detailFadeIn 0.3s ease-out 0.35s both",
+        animation: "detailFadeIn 0.6s ease-out 0.7s both",
       }}
     >
       <div style={{ fontSize: 18, fontWeight: 700, color: theme.warning }}>Kodeagenten</div>
