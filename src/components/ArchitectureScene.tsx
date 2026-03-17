@@ -688,11 +688,12 @@ export const ArchitectureScene: React.FC = () => {
       {/* Detail panel */}
       {ActiveDetail && (
         <div
+          key={activeStep}
           style={{
             maxWidth: 1500,
             width: "100%",
             flex: 1,
-            animation: "detailFadeIn 0.35s ease-out",
+            animation: "detailFadeIn 0.5s ease-out 0.5s both",
           }}
         >
           <ActiveDetail />
