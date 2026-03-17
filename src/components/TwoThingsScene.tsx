@@ -160,63 +160,114 @@ export const TwoThingsScene: React.FC = () => {
             boxShadow: activeStep === 1 ? `0 0 30px ${theme.accent}20` : "none",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
-            <span
-              style={{
-                fontSize: 20,
-                fontWeight: 800,
-                color: theme.background,
-                background: theme.accent,
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              2
-            </span>
-            <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent }}>
-              Verktøy (MCP)
-            </h3>
-          </div>
-          <p style={{ fontSize: 22, color: theme.textMuted, marginBottom: 24, lineHeight: 1.5 }}>
-            Tilgang til ekstern kunnskap. Agenten henter det den trenger, når den trenger det.
-          </p>
-
           {activeStep >= 1 && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {[
-                { Icon: Search, label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
-                { Icon: Network, label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
-                { Icon: Code, label: "Kodesøk", desc: "Fire repoer via Serena" },
-              ].map((tool, i) => (
-                <div
-                  key={i}
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                  marginBottom: 24,
+                  animation: "toolFadeIn 0.6s ease-out both",
+                }}
+              >
+                <span
                   style={{
+                    fontSize: 20,
+                    fontWeight: 800,
+                    color: theme.background,
+                    background: theme.accent,
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
-                    gap: 16,
-                    background: `${theme.accent}10`,
-                    border: `1px solid ${theme.accent}20`,
-                    borderRadius: 12,
-                    padding: "16px 20px",
-                    opacity: activeStep >= 1 ? 1 : 0,
-                    transform: `translateX(${activeStep >= 1 ? 0 : 20}px)`,
-                    transition: `all 0.3s ease-out ${i * 0.1}s`,
+                    justifyContent: "center",
                   }}
                 >
-                  <tool.Icon size={28} color={theme.accent} strokeWidth={1.5} />
-                  <div>
-                    <div style={{ fontSize: 20, fontWeight: 600, color: theme.text }}>
-                      {tool.label}
+                  2
+                </span>
+                <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent }}>
+                  Verktøy (MCP)
+                </h3>
+              </div>
+              <p
+                style={{
+                  fontSize: 22,
+                  color: theme.textMuted,
+                  marginBottom: 24,
+                  lineHeight: 1.5,
+                  animation: "toolFadeIn 0.6s ease-out 0.2s both",
+                }}
+              >
+                Tilgang til ekstern kunnskap. Agenten henter det den trenger, når den trenger det.
+              </p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {[
+                  { Icon: Search, label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
+                  { Icon: Network, label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
+                  { Icon: Code, label: "Kodesøk", desc: "Fire repoer via Serena" },
+                ].map((tool, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 16,
+                      background: `${theme.accent}10`,
+                      border: `1px solid ${theme.accent}20`,
+                      borderRadius: 12,
+                      padding: "16px 20px",
+                      animation: `toolFadeIn 0.6s ease-out ${0.4 + i * 0.25}s both`,
+                    }}
+                  >
+                    <tool.Icon size={28} color={theme.accent} strokeWidth={1.5} />
+                    <div>
+                      <div style={{ fontSize: 20, fontWeight: 600, color: theme.text }}>
+                        {tool.label}
+                      </div>
+                      <div style={{ fontSize: 16, color: theme.textMuted }}>{tool.desc}</div>
                     </div>
-                    <div style={{ fontSize: 16, color: theme.textMuted }}>{tool.desc}</div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              <style>{`
+                @keyframes toolFadeIn {
+                  from { opacity: 0; transform: translateY(12px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+              `}</style>
+            </>
+          )}
+          {activeStep < 1 && (
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24 }}>
+                <span
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 800,
+                    color: theme.background,
+                    background: theme.accent,
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  2
+                </span>
+                <h3 style={{ fontSize: 32, fontWeight: 700, color: theme.accent }}>
+                  Verktøy (MCP)
+                </h3>
+              </div>
+              <p style={{ fontSize: 22, color: theme.textMuted, marginBottom: 24, lineHeight: 1.5 }}>
+                Tilgang til ekstern kunnskap. Agenten henter det den trenger, når den trenger det.
+              </p>
+            </>
           )}
         </div>
       </div>
