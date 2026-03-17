@@ -289,7 +289,7 @@ export const MCPToolsScene: React.FC = () => {
         }}
       >
         <p style={{ fontSize: 22, color: theme.gold, fontWeight: 500, textAlign: "center" }}>
-          Gi agenten akkurat nok kontekst til å ta gode valg
+          Progressive disclosure gjelder for MCP også — oversikt først, detaljer på forespørsel
         </p>
       </div>
     </AbsoluteFill>

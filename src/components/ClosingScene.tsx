@@ -141,7 +141,7 @@ export const ClosingScene: React.FC = () => {
       >
         <span style={{ fontSize: 24, fontWeight: 600, color: theme.text }}>Rune Lind</span>
         <span style={{ fontSize: 18, color: theme.textMuted }}>
-          Seniorkonsulent, Capra Consulting
+          Seniorkonsulent, Capra Consulting — Team Melosys, Nav
         </span>
       </div>
     </AbsoluteFill>
