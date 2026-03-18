@@ -1,5 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { Target, Filter, Plug, Rocket } from "lucide-react";
+import { Target, Filter, Plug, Rocket, BarChart3 } from "lucide-react";
 import { theme } from "../styles/theme";
 import { useStepNavigation } from "../hooks/useStepNavigation";
 
@@ -32,6 +32,13 @@ const learnings = [
     color: theme.warning,
     Icon: Rocket,
   },
+  {
+    title: "Mål søkekvaliteten, ikke bare bygg den",
+    desc: "Uten benchmark vet du ikke om endringene hjelper. Reranking ga +14 % MRR selv om det ikke syntes i enklere tester. Vi oppdaget også at cross-encoder kollapser på engelske spørringer mot norsk innhold.",
+    highlight: "Du trenger en feedback-loop, ikke bare en pipeline",
+    color: theme.gold,
+    Icon: BarChart3,
+  },
 ];
 
 export const KeyLearningsScene: React.FC = () => {
@@ -50,7 +57,6 @@ export const KeyLearningsScene: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         padding: "60px 80px",
       }}
     >
@@ -61,7 +67,7 @@ export const KeyLearningsScene: React.FC = () => {
           fontSize: 52,
           fontWeight: 700,
           color: theme.text,
-          marginBottom: 50,
+          marginBottom: 40,
         }}
       >
         Hva vi lærte
@@ -70,7 +76,7 @@ export const KeyLearningsScene: React.FC = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "1fr 1fr 1fr",
           gap: 24,
           maxWidth: 1400,
           width: "100%",
@@ -85,12 +91,11 @@ export const KeyLearningsScene: React.FC = () => {
               key={i}
               style={{
                 opacity: isVisible ? 1 : 0.12,
-                transform: `scale(${isVisible ? 1 : 0.95})`,
                 transition: "all 0.4s ease-out",
                 background: isActive ? `${learning.color}12` : `${theme.text}05`,
                 border: `2px solid ${isActive ? learning.color : isVisible ? `${learning.color}40` : `${theme.text}10`}`,
                 borderRadius: 20,
-                padding: "32px 36px",
+                padding: "24px 28px",
                 boxShadow: isActive ? `0 0 30px ${learning.color}15` : "none",
               }}
             >

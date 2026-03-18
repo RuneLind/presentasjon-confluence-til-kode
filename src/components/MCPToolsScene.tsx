@@ -101,7 +101,7 @@ export const MCPToolsScene: React.FC = () => {
               </h3>
             </div>
             <p style={{ fontSize: 19, color: theme.textMuted, lineHeight: 1.6, marginBottom: 20 }}>
-              4 kode-servere med 20+ verktøy hver. Agenten ser bare to:
+              6 kode-servere med 20+ verktøy hver. Agenten ser bare to:
             </p>
 
             {/* The two tools */}
@@ -162,7 +162,7 @@ export const MCPToolsScene: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              2 verktøy i stedet for 80+
+              2 verktøy i stedet for 120+
             </div>
           </div>
         </div>
@@ -271,7 +271,7 @@ export const MCPToolsScene: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              90 % mindre kontekst per søk
+              Størrelsesordener mindre kontekst per søk
             </div>
           </div>
         </div>

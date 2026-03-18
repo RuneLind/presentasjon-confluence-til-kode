@@ -10,7 +10,7 @@ const dialogue = [
   },
   {
     from: "huginn",
-    text: "3 treff via hybrid søk. Beste: «Rutiner for årsavregning» (score 0.91).",
+    text: "3 treff via hybrid søk. Beste: «Rutiner for årsavregning» (91 % relevans).",
   },
   {
     from: "muninn",

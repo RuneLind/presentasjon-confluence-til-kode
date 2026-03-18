@@ -66,15 +66,32 @@ const HentDetail: React.FC = () => (
     </div>
     <div
       style={{
+        padding: "10px 16px",
+        background: `${theme.secondary}08`,
+        border: `1px solid ${theme.secondary}25`,
+        borderRadius: 10,
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        animation: "pipelineFadeIn 0.6s ease-out 1.0s both",
+      }}
+    >
+      <span style={{ fontSize: 15, fontWeight: 700, color: theme.secondary }}>PII-redaksjon:</span>
+      <span style={{ fontSize: 14, color: theme.textMuted }}>
+        Jira-issues inneholder personnummer og e-post. Alt redakteres automatisk før lagring — søkeindeksen inneholder aldri personopplysninger.
+      </span>
+    </div>
+    <div
+      style={{
         padding: "12px 20px",
         background: `${theme.gold}10`,
         border: `1px solid ${theme.gold}25`,
         borderRadius: 10,
-        animation: "pipelineFadeIn 0.6s ease-out 1.1s both",
+        animation: "pipelineFadeIn 0.6s ease-out 1.2s both",
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        Sidehierarki fra Confluence-ancestors bevares som breadcrumb i hvert dokument. Denne konteksten gjør at søk kan skille mellom like seksjoner fra ulike deler av wikien.
+        Kunnskapen er spredt over mange systemer, bak ulike autentiseringsmurer, i ulike formater. Hele poenget med Hent-steget er å normalisere alt til markdown — slik at resten av pipelinen er kildeagnostisk.
       </p>
     </div>
   </div>

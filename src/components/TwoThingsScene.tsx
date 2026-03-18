@@ -207,7 +207,7 @@ export const TwoThingsScene: React.FC = () => {
                 {[
                   { Icon: Search, label: "Søk i dokumentasjon", desc: "Målrettede oppslag" },
                   { Icon: Network, label: "Kunnskapsgraf", desc: "Strukturerte relasjoner" },
-                  { Icon: Code, label: "Kodesøk", desc: "Fire repoer via Serena" },
+                  { Icon: Code, label: "Kodesøk", desc: "Seks repoer via Serena" },
                 ].map((tool, i) => (
                   <div
                     key={i}
