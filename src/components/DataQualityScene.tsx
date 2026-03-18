@@ -14,24 +14,25 @@ const pipelineSteps = [
 /* ── Detail panels ── */
 
 const HentDetail: React.FC = () => (
-  <div style={{ display: "flex", gap: 20 }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ display: "flex", gap: 20 }}>
     {[
       {
         name: "Confluence",
-        detail: "SSO-pålogging via Playwright, deretter REST API direkte. 319 sider fra Team Melosys.",
-        tech: "SSO → REST API → Markdown",
+        detail: "Playwright for SSO-pålogging, lagrer cookies, deretter REST API direkte. HTML konverteres til markdown med BeautifulSoup.",
+        tech: "SSO → REST API → Markdown · ~300 sider",
         color: "#2684FF",
       },
       {
         name: "Jira",
-        detail: "Samme Playwright-tilnærming. Henter issues med beskrivelse og kommentarer.",
-        tech: "2 778 issues indeksert",
+        detail: "Samme SSO-tilnærming. Henter issues med beskrivelse, kommentarer og epic-kobling. PII redakteres automatisk.",
+        tech: "~2 100 issues indeksert",
         color: "#0052CC",
       },
       {
         name: "Notion",
-        detail: "Notion API med inkrementelle oppdateringer. Trestruktur bevart.",
-        tech: "8 311 dokumenter",
+        detail: "Notion API med token-autentisering. Inkrementelle oppdateringer, trestruktur bevart.",
+        tech: "~8 300 dokumenter",
         color: "#999",
       },
     ].map((src, i) => (
@@ -62,6 +63,20 @@ const HentDetail: React.FC = () => (
         </div>
       </div>
     ))}
+    </div>
+    <div
+      style={{
+        padding: "12px 20px",
+        background: `${theme.gold}10`,
+        border: `1px solid ${theme.gold}25`,
+        borderRadius: 10,
+        animation: "pipelineFadeIn 0.6s ease-out 1.1s both",
+      }}
+    >
+      <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
+        Sidehierarki fra Confluence-ancestors bevares som breadcrumb i hvert dokument. Denne konteksten gjør at søk kan skille mellom like seksjoner fra ulike deler av wikien.
+      </p>
+    </div>
   </div>
 );
 
@@ -87,7 +102,7 @@ const RensDetail: React.FC = () => (
       {[
         { label: "Tomme chunks (kun breadcrumb-sti)", count: "8 223 fjernet" },
         { label: "For korte chunks (under 100 tegn)", count: "3 832 fjernet" },
-        { label: "Bilder og interne URLer", count: "502 fjernet" },
+        { label: "Bilder og interne URLer", count: "~500 fjernet" },
       ].map((row, i) => (
         <div
           key={i}
@@ -121,7 +136,7 @@ const RensDetail: React.FC = () => (
       {[
         "Confluence-HTML → ren markdown tok mange iterasjoner",
         "Møtereferater og arkivert innhold filtrert bort",
-        "Kodeblokker fjernet — ga falske treff i søk",
+        "Kodeblokker fjernet — Mermaid/ER ga falske treff",
         "Confluence-layout og makroer strippes",
         "Dårlig input → dårlige søkeresultater uansett modell",
       ].map((item, i) => (
@@ -152,7 +167,7 @@ const RensDetail: React.FC = () => (
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        35 % av innholdet var støy — og modellen behandler støy som fakta. Hvert eneste søk ble bedre bare av å rydde i indeksen. Ingen prompt-teknikk kan kompensere for dårlig kontekst.
+        En LLM skiller ikke mellom støy og fakta — den leser alt som sannhet. Når en tredjedel av søkeresultatene er støy, hjelper det ikke å skrive bedre prompts. Kvaliteten settes av det svakeste leddet i pipelinen, og det er nesten alltid dataen.
       </p>
     </div>
   </div>
@@ -241,11 +256,11 @@ til vedtak...`}
     >
       <div style={{ fontFamily: theme.monoFont, fontSize: 15, color: theme.accent, marginBottom: 6 }}>Algoritme</div>
       <div style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.6 }}>
-        1. Splitt ved H1–H3
+        1. Splitt ved H1–H3 (H4+ beholdes)
         <br />
-        2. Seksjoner &gt; 1000 tegn → rekursiv oppdeling
+        2. &gt; 1000 tegn → RecursiveCharacterTextSplitter
         <br />
-        3. Fallback til fast størrelse
+        3. Ingen overskrifter → fallback
       </div>
     </div>
     </div>
@@ -259,7 +274,7 @@ til vedtak...`}
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        Hver chunk blir én vektor i søkeindeksen. En chunk som blander to temaer matcher dårlig på begge. Overskriftsbasert splitting gir fokuserte vektorer som treffer riktig — og sammenhengende kontekst til agenten.
+        Hver chunk blir én vektor — ett punkt i et flerdimensjonalt rom. En chunk som blander arkitektur og kompetanse havner midt mellom begge temaene og matcher dårlig på begge. Breadcrumb-prefikset gir kontekst om hvor innholdet hører hjemme.
       </p>
     </div>
   </div>
@@ -280,7 +295,7 @@ const TaggDetail: React.FC = () => (
     >
       <div style={{ fontSize: 18, fontWeight: 700, color: theme.success, marginBottom: 10 }}>Taksonomi-basert tagging</div>
       <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
-        15 parallelle Claude Haiku-agenter tagger ~300 filer på 2–3 minutter. Hver fil får 1–5 tags fra en fast taksonomi.
+        15 parallelle Claude Haiku-agenter tagger ~300 filer på 2–3 minutter. Hver fil får 1–5 tags fra en fast taksonomi (59 tags i tre kategorier).
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
         {["lovvalg", "medlemskap", "trygdeavgift", "eessi", "arkitektur", "kafka", "database", "api", "rutiner", "onboarding"].map(
@@ -355,7 +370,7 @@ const TaggDetail: React.FC = () => (
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        Tags injiseres i søketeksten og forbedrer ranking i både vektor- og nøkkelordsøk. I tillegg kan agenten filtrere med tags — et søk om «lovvalg» trenger ikke lete gjennom onboarding-docs og møtereferater.
+        Tags prepended til chunk-teksten før embedding, slik at selve vektoren «vet» hva innholdet handler om. I tillegg kan agenten filtrere søkerommet ned fra 289 til 35 dokumenter med tags — et spørsmål om lovvalg trenger ikke konkurrere med onboarding-guider om plass i resultatene.
       </p>
     </div>
   </div>
@@ -376,7 +391,7 @@ const IndekserDetail: React.FC = () => (
     >
       <div style={{ fontSize: 18, fontWeight: 700, color: theme.warning, marginBottom: 10 }}>Flerspråklig embedding</div>
       <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
-        Byttet fra engelsk modell til <span style={{ fontFamily: theme.monoFont, fontSize: 14, color: theme.accent }}>multilingual-e5-base</span> — den viktigste enkelendringen.
+        Byttet fra <span style={{ fontFamily: theme.monoFont, fontSize: 14, color: theme.textMuted }}>all-MiniLM-L6-v2</span> til <span style={{ fontFamily: theme.monoFont, fontSize: 14, color: theme.accent }}>multilingual-e5-base</span> — den viktigste enkelendringen.
       </div>
       {[
         { pair: "«Rammeavtaler» ↔ «Framework agreements»", before: "0.02", after: "0.83" },
@@ -416,10 +431,10 @@ const IndekserDetail: React.FC = () => (
     >
       <div style={{ fontSize: 18, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Alt kjører lokalt</div>
       {[
-        { label: "FAISS", desc: "Vektorindeks — semantisk søk" },
-        { label: "BM25", desc: "Nøkkelordindeks — eksakte termer" },
-        { label: "RRF", desc: "Fusjonerer resultatene" },
-        { label: "Cross-encoder", desc: "Reranking — ~1s ekstra, bimodal scoring" },
+        { label: "FAISS", desc: "Vektorindeks (IndexFlatL2) — semantisk søk" },
+        { label: "BM25", desc: "Nøkkelordindeks (BM25Okapi) — eksakte termer" },
+        { label: "RRF", desc: "Reciprocal Rank Fusion — fusjonerer rangeringene" },
+        { label: "Cross-encoder", desc: "bge-reranker-v2-m3 — bimodal scoring" },
       ].map((item, i) => (
         <div
           key={i}
@@ -457,7 +472,7 @@ const IndekserDetail: React.FC = () => (
           animation: "pipelineFadeIn 0.5s ease-out 1.3s both",
         }}
       >
-        Søk: &lt;50ms | Med reranking: ~1s
+        Søk: ~15–25ms | Med reranking: ~500–900ms
       </div>
     </div>
     </div>
@@ -471,7 +486,7 @@ const IndekserDetail: React.FC = () => (
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01» uten nøkkelord. Hybrid søk kombinerer begge, og cross-encoder reranking skiller tydelig mellom relevant og irrelevant.
+        Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01». Nøkkelord finner eksakte termer, men forstår ikke at «sykefravær» og «sick leave» er det samme. Hybrid søk kombinerer begge. Reranking gir +14 % MRR på Confluence og +10 % på Jira.
       </p>
     </div>
   </div>
