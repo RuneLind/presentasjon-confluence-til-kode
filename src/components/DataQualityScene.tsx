@@ -435,6 +435,7 @@ const IndekserDetail: React.FC = () => (
         { label: "BM25", desc: "Nøkkelordindeks (BM25Okapi) — eksakte termer" },
         { label: "RRF", desc: "Reciprocal Rank Fusion — fusjonerer rangeringene" },
         { label: "Cross-encoder", desc: "bge-reranker-v2-m3 — bimodal scoring" },
+        { label: "Graf", desc: "71 EESSI-noder + 2 177 Jira-noder — deterministisk" },
       ].map((item, i) => (
         <div
           key={i}
@@ -486,7 +487,7 @@ const IndekserDetail: React.FC = () => (
       }}
     >
       <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
-        Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01». Nøkkelord finner eksakte termer, men forstår ikke at «sykefravær» og «sick leave» er det samme. Hybrid søk kombinerer begge. Reranking gir +14 % MRR på Confluence og +10 % på Jira.
+        Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01». Nøkkelord finner eksakte termer, men forstår ikke at «sykefravær» er «sick leave». Hybrid søk kombinerer begge. Reranking gir +14 % MRR. Grafen svarer direkte på relasjonelle spørsmål uten å lese dokumenter.
       </p>
     </div>
   </div>

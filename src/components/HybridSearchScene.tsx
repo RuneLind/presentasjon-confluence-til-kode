@@ -1,5 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from "remotion";
-import { Brain, Search, Scale } from "lucide-react";
+import { Brain, Search, Scale, Network } from "lucide-react";
 import { theme } from "../styles/theme";
 
 export const HybridSearchScene: React.FC = () => {
@@ -32,6 +32,18 @@ export const HybridSearchScene: React.FC = () => {
         match: "«LA_BUC_01»",
         score: "1.0",
         scoreLabel: "eksakt treff",
+      },
+    },
+    {
+      title: "Kunnskapsgraf",
+      desc: "Strukturerte relasjoner — svarer direkte uten å lese dokumenter",
+      color: theme.warning,
+      Icon: Network,
+      example: {
+        query: "«Hvilke SEDer i LA_BUC_01?»",
+        match: "A001, A002, A005, A006, A008, A011",
+        score: "→",
+        scoreLabel: "deterministisk graftraversering",
       },
     },
     {
@@ -87,7 +99,7 @@ export const HybridSearchScene: React.FC = () => {
           marginBottom: 50,
         }}
       >
-        Semantisk søk forstår mening på tvers av språk, men bommer på koder og forkortelser
+        Fire lag som løser ulike problemer — semantikk, nøkkelord, struktur og presisjon
       </p>
 
       <div style={{ display: "flex", gap: 30, maxWidth: 1500, width: "100%" }}>
@@ -222,7 +234,7 @@ export const HybridSearchScene: React.FC = () => {
             border: `1px solid ${theme.text}20`,
           }}
         >
-          Fusjon → Reranking → Beste resultater
+          Grafsjekk → Fusjon → Reranking → Beste resultater
         </span>
         <div
           style={{
