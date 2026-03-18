@@ -77,15 +77,16 @@ const RensDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.5s both",
       }}
     >
+      <div style={{ fontSize: 14, color: theme.textMuted, marginBottom: 8 }}>
+        Chunks = tekstseksjonene dokumentene deles opp i for søk
+      </div>
       <div style={{ fontSize: 16, fontWeight: 700, color: theme.secondary, marginBottom: 10 }}>
         22 325 → 14 481 chunks (−35 %)
       </div>
       {[
-        { label: "Tomme breadcrumb-chunks", before: "8 223", after: "0" },
-        { label: "YAML-frontmatter i chunks", before: "8 226", after: "1" },
-        { label: "Chunks under 100 tegn", before: "3 983", after: "151" },
-        { label: "Markdown-bilder", before: "441", after: "0" },
-        { label: "S3-URLer", before: "64", after: "3" },
+        { label: "Tomme chunks (kun breadcrumb-sti)", count: "8 223 fjernet" },
+        { label: "For korte chunks (under 100 tegn)", count: "3 832 fjernet" },
+        { label: "Bilder og interne URLer", count: "502 fjernet" },
       ].map((row, i) => (
         <div
           key={i}
@@ -94,16 +95,13 @@ const RensDetail: React.FC = () => (
             justifyContent: "space-between",
             alignItems: "center",
             padding: "6px 0",
-            borderBottom: i < 4 ? `1px solid ${theme.text}08` : "none",
+            borderBottom: i < 2 ? `1px solid ${theme.text}08` : "none",
             fontSize: 13,
             animation: `pipelineFadeIn 0.5s ease-out ${0.6 + i * 0.1}s both`,
           }}
         >
           <span style={{ color: theme.textMuted }}>{row.label}</span>
-          <div style={{ display: "flex", gap: 8, fontFamily: theme.monoFont }}>
-            <span style={{ color: theme.secondary, textDecoration: "line-through", opacity: 0.6 }}>{row.before}</span>
-            <span style={{ color: theme.success }}>{row.after}</span>
-          </div>
+          <span style={{ fontFamily: theme.monoFont, color: theme.secondary }}>{row.count}</span>
         </div>
       ))}
     </div>
@@ -118,13 +116,13 @@ const RensDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.7s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Hva fjernes?</div>
+      <div style={{ fontSize: 16, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Mye arbeid i markdown-kvalitet</div>
       {[
-        "Møtereferater og arkivert innhold",
-        "YAML-frontmatter og metadata-støy",
-        "Kodeblokker som gir falske treff",
-        "Personlige handlingspunkter (@@-markører)",
-        "Confluence-HTML-tagger og layout-elementer",
+        "Confluence-HTML → ren markdown tok mange iterasjoner",
+        "Møtereferater og arkivert innhold filtrert bort",
+        "Kodeblokker fjernet — ga falske treff i søk",
+        "Confluence-layout og makroer strippes",
+        "Dårlig input → dårlige søkeresultater uansett modell",
       ].map((item, i) => (
         <div
           key={i}
