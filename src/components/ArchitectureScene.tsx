@@ -662,11 +662,11 @@ export const ArchitectureScene: React.FC = () => {
                 }}
               >
                 <div style={{ marginBottom: 8, display: "flex", justifyContent: "center" }}>
-                  <phase.Icon size={30} color={phase.color} strokeWidth={1.5} />
+                  <phase.Icon size={36} color={phase.color} strokeWidth={1.5} />
                 </div>
                 <div
                   style={{
-                    fontSize: 13,
+                    fontSize: 15,
                     fontWeight: 800,
                     color: phase.color,
                     fontFamily: theme.monoFont,
@@ -675,10 +675,10 @@ export const ArchitectureScene: React.FC = () => {
                 >
                   STEG {phase.num}
                 </div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
+                <h3 style={{ fontSize: 24, fontWeight: 700, color: theme.text, marginBottom: 6 }}>
                   {phase.title}
                 </h3>
-                <p style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.4 }}>{phase.desc}</p>
+                <p style={{ fontSize: 16, color: theme.textMuted, lineHeight: 1.4 }}>{phase.desc}</p>
               </div>
             </div>
           );

@@ -46,12 +46,12 @@ const HentDetail: React.FC = () => (
           animation: `pipelineFadeIn 0.6s ease-out ${0.5 + i * 0.2}s both`,
         }}
       >
-        <div style={{ fontSize: 18, fontWeight: 700, color: src.color, marginBottom: 8 }}>{src.name}</div>
-        <div style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.5, marginBottom: 10 }}>{src.detail}</div>
+        <div style={{ fontSize: 20, fontWeight: 700, color: src.color, marginBottom: 8 }}>{src.name}</div>
+        <div style={{ fontSize: 16, color: theme.textMuted, lineHeight: 1.5, marginBottom: 10 }}>{src.detail}</div>
         <div
           style={{
             fontFamily: theme.monoFont,
-            fontSize: 12,
+            fontSize: 14,
             color: theme.textMuted,
             background: `${theme.text}08`,
             padding: "5px 10px",
@@ -78,10 +78,10 @@ const RensDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.5s both",
       }}
     >
-      <div style={{ fontSize: 14, color: theme.textMuted, marginBottom: 8 }}>
+      <div style={{ fontSize: 16, color: theme.textMuted, marginBottom: 8 }}>
         Chunks = tekstseksjonene dokumentene deles opp i for søk
       </div>
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.secondary, marginBottom: 10 }}>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.secondary, marginBottom: 10 }}>
         22 325 → 14 481 chunks (−35 %)
       </div>
       {[
@@ -97,7 +97,7 @@ const RensDetail: React.FC = () => (
             alignItems: "center",
             padding: "6px 0",
             borderBottom: i < 2 ? `1px solid ${theme.text}08` : "none",
-            fontSize: 13,
+            fontSize: 15,
             animation: `pipelineFadeIn 0.5s ease-out ${0.6 + i * 0.1}s both`,
           }}
         >
@@ -117,7 +117,7 @@ const RensDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.7s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Mye arbeid i markdown-kvalitet</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Mye arbeid i markdown-kvalitet</div>
       {[
         "Confluence-HTML → ren markdown tok mange iterasjoner",
         "Møtereferater og arkivert innhold filtrert bort",
@@ -128,7 +128,7 @@ const RensDetail: React.FC = () => (
         <div
           key={i}
           style={{
-            fontSize: 13,
+            fontSize: 15,
             color: theme.textMuted,
             lineHeight: 1.5,
             marginBottom: 6,
@@ -151,7 +151,7 @@ const RensDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 1.2s both",
       }}
     >
-      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+      <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
         35 % av innholdet var støy — og modellen behandler støy som fakta. Hvert eneste søk ble bedre bare av å rydde i indeksen. Ingen prompt-teknikk kan kompensere for dårlig kontekst.
       </p>
     </div>
@@ -171,11 +171,11 @@ const ChunkDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.5s both",
       }}
     >
-      <div style={{ fontSize: 14, fontWeight: 700, color: theme.secondary, marginBottom: 8 }}>Før: vilkårlig oppdeling</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.secondary, marginBottom: 8 }}>Før: vilkårlig oppdeling</div>
       <div
         style={{
           fontFamily: theme.monoFont,
-          fontSize: 12,
+          fontSize: 14,
           color: theme.textMuted,
           background: `${theme.text}08`,
           padding: "12px 14px",
@@ -188,7 +188,7 @@ const ChunkDetail: React.FC = () => (
 dokumenter:\\n\\n- Saksgang - fra
 journalfø...`}
       </div>
-      <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 8, fontStyle: "italic" }}>
+      <div style={{ fontSize: 14, color: theme.textMuted, marginTop: 8, fontStyle: "italic" }}>
         Kutter midt i setninger og avsnitt
       </div>
     </div>
@@ -203,11 +203,11 @@ journalfø...`}
         animation: "pipelineFadeIn 0.6s ease-out 0.7s both",
       }}
     >
-      <div style={{ fontSize: 14, fontWeight: 700, color: theme.success, marginBottom: 8 }}>Nå: overskriftsbasert</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.success, marginBottom: 8 }}>Nå: overskriftsbasert</div>
       <div
         style={{
           fontFamily: theme.monoFont,
-          fontSize: 12,
+          fontSize: 14,
           color: theme.textMuted,
           background: `${theme.text}08`,
           padding: "12px 14px",
@@ -221,7 +221,7 @@ journalfø...`}
 Saksgang - fra journalføring
 til vedtak...`}
       </div>
-      <div style={{ fontSize: 12, color: theme.textMuted, marginTop: 8, fontStyle: "italic" }}>
+      <div style={{ fontSize: 14, color: theme.textMuted, marginTop: 8, fontStyle: "italic" }}>
         Logiske seksjoner med kontekst. 73 % heading-basert.
       </div>
     </div>
@@ -239,8 +239,8 @@ til vedtak...`}
         animation: "pipelineFadeIn 0.6s ease-out 0.9s both",
       }}
     >
-      <div style={{ fontFamily: theme.monoFont, fontSize: 13, color: theme.accent, marginBottom: 6 }}>Algoritme</div>
-      <div style={{ fontSize: 12, color: theme.textMuted, lineHeight: 1.6 }}>
+      <div style={{ fontFamily: theme.monoFont, fontSize: 15, color: theme.accent, marginBottom: 6 }}>Algoritme</div>
+      <div style={{ fontSize: 14, color: theme.textMuted, lineHeight: 1.6 }}>
         1. Splitt ved H1–H3
         <br />
         2. Seksjoner &gt; 1000 tegn → rekursiv oppdeling
@@ -258,7 +258,7 @@ til vedtak...`}
         animation: "pipelineFadeIn 0.6s ease-out 1.1s both",
       }}
     >
-      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+      <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
         Hver chunk blir én vektor i søkeindeksen. En chunk som blander to temaer matcher dårlig på begge. Overskriftsbasert splitting gir fokuserte vektorer som treffer riktig — og sammenhengende kontekst til agenten.
       </p>
     </div>
@@ -278,8 +278,8 @@ const TaggDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.5s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.success, marginBottom: 10 }}>Taksonomi-basert tagging</div>
-      <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.success, marginBottom: 10 }}>Taksonomi-basert tagging</div>
+      <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
         15 parallelle Claude Haiku-agenter tagger ~300 filer på 2–3 minutter. Hver fil får 1–5 tags fra en fast taksonomi.
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -314,7 +314,7 @@ const TaggDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.7s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.text, marginBottom: 10 }}>To-stegs prosess</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.text, marginBottom: 10 }}>To-stegs prosess</div>
       {[
         { step: "1. Oppdagelse", desc: "Fri tagging på et utvalg for å finne naturlige emner" },
         { step: "2. Klassifisering", desc: "Agentene velger fra fast taksonomi — ingen frie tags" },
@@ -326,14 +326,14 @@ const TaggDetail: React.FC = () => (
             animation: `pipelineFadeIn 0.5s ease-out ${0.8 + i * 0.15}s both`,
           }}
         >
-          <div style={{ fontSize: 14, fontWeight: 600, color: theme.success }}>{item.step}</div>
-          <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.5 }}>{item.desc}</div>
+          <div style={{ fontSize: 16, fontWeight: 600, color: theme.success }}>{item.step}</div>
+          <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5 }}>{item.desc}</div>
         </div>
       ))}
       <div
         style={{
           fontFamily: theme.monoFont,
-          fontSize: 12,
+          fontSize: 14,
           color: theme.textMuted,
           background: `${theme.text}08`,
           padding: "8px 12px",
@@ -354,7 +354,7 @@ const TaggDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 1.3s both",
       }}
     >
-      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+      <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
         Tags injiseres i søketeksten og forbedrer ranking i både vektor- og nøkkelordsøk. I tillegg kan agenten filtrere med tags — et søk om «lovvalg» trenger ikke lete gjennom onboarding-docs og møtereferater.
       </p>
     </div>
@@ -374,9 +374,9 @@ const IndekserDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.5s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.warning, marginBottom: 10 }}>Flerspråklig embedding</div>
-      <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
-        Byttet fra engelsk modell til <span style={{ fontFamily: theme.monoFont, fontSize: 12, color: theme.accent }}>multilingual-e5-base</span> — den viktigste enkelendringen.
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.warning, marginBottom: 10 }}>Flerspråklig embedding</div>
+      <div style={{ fontSize: 15, color: theme.textMuted, lineHeight: 1.5, marginBottom: 12 }}>
+        Byttet fra engelsk modell til <span style={{ fontFamily: theme.monoFont, fontSize: 14, color: theme.accent }}>multilingual-e5-base</span> — den viktigste enkelendringen.
       </div>
       {[
         { pair: "«Rammeavtaler» ↔ «Framework agreements»", before: "0.02", after: "0.83" },
@@ -391,7 +391,7 @@ const IndekserDetail: React.FC = () => (
             alignItems: "center",
             padding: "6px 0",
             borderBottom: i < 2 ? `1px solid ${theme.text}08` : "none",
-            fontSize: 12,
+            fontSize: 14,
             animation: `pipelineFadeIn 0.5s ease-out ${0.7 + i * 0.12}s both`,
           }}
         >
@@ -414,7 +414,7 @@ const IndekserDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 0.7s both",
       }}
     >
-      <div style={{ fontSize: 16, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Alt kjører lokalt</div>
+      <div style={{ fontSize: 18, fontWeight: 700, color: theme.text, marginBottom: 10 }}>Alt kjører lokalt</div>
       {[
         { label: "FAISS", desc: "Vektorindeks — semantisk søk" },
         { label: "BM25", desc: "Nøkkelordindeks — eksakte termer" },
@@ -434,7 +434,7 @@ const IndekserDetail: React.FC = () => (
           <span
             style={{
               fontFamily: theme.monoFont,
-              fontSize: 12,
+              fontSize: 14,
               color: theme.warning,
               background: `${theme.warning}15`,
               padding: "3px 10px",
@@ -445,13 +445,13 @@ const IndekserDetail: React.FC = () => (
           >
             {item.label}
           </span>
-          <span style={{ fontSize: 13, color: theme.textMuted }}>{item.desc}</span>
+          <span style={{ fontSize: 15, color: theme.textMuted }}>{item.desc}</span>
         </div>
       ))}
       <div
         style={{
           fontFamily: theme.monoFont,
-          fontSize: 12,
+          fontSize: 14,
           color: theme.textMuted,
           marginTop: 6,
           animation: "pipelineFadeIn 0.5s ease-out 1.3s both",
@@ -470,7 +470,7 @@ const IndekserDetail: React.FC = () => (
         animation: "pipelineFadeIn 0.6s ease-out 1.5s both",
       }}
     >
-      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+      <p style={{ fontSize: 16, color: theme.gold, fontWeight: 500 }}>
         Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01» uten nøkkelord. Hybrid søk kombinerer begge, og cross-encoder reranking skiller tydelig mellom relevant og irrelevant.
       </p>
     </div>
@@ -534,7 +534,7 @@ export const DataQualityScene: React.FC = () => {
         <span
           style={{
             fontFamily: theme.monoFont,
-            fontSize: 12,
+            fontSize: 14,
             color: theme.primary,
             background: `${theme.primary}15`,
             padding: "3px 10px",
@@ -580,13 +580,13 @@ export const DataQualityScene: React.FC = () => {
                   boxShadow: isActive ? `0 0 25px ${step.color}20` : "none",
                 }}
               >
-                <div style={{ marginBottom: 6, display: "flex", justifyContent: "center" }}>
-                  <step.Icon size={26} color={step.color} strokeWidth={1.5} />
+                <div style={{ marginBottom: 8, display: "flex", justifyContent: "center" }}>
+                  <step.Icon size={36} color={step.color} strokeWidth={1.5} />
                 </div>
-                <div style={{ fontSize: 18, fontWeight: 700, color: step.color, marginBottom: 4 }}>
+                <div style={{ fontSize: 24, fontWeight: 700, color: step.color, marginBottom: 6 }}>
                   {step.title}
                 </div>
-                <div style={{ fontSize: 13, color: theme.textMuted, lineHeight: 1.3 }}>{step.desc}</div>
+                <div style={{ fontSize: 16, color: theme.textMuted, lineHeight: 1.4 }}>{step.desc}</div>
               </div>
             </div>
           );
