@@ -66,7 +66,8 @@ const HentDetail: React.FC = () => (
 );
 
 const RensDetail: React.FC = () => (
-  <div style={{ display: "flex", gap: 20 }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ display: "flex", gap: 20 }}>
     <div
       style={{
         flex: 1,
@@ -140,11 +141,26 @@ const RensDetail: React.FC = () => (
         </div>
       ))}
     </div>
+    </div>
+    <div
+      style={{
+        padding: "12px 20px",
+        background: `${theme.gold}10`,
+        border: `1px solid ${theme.gold}25`,
+        borderRadius: 10,
+        animation: "pipelineFadeIn 0.6s ease-out 1.2s both",
+      }}
+    >
+      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+        35 % av innholdet var støy — og modellen behandler støy som fakta. Hvert eneste søk ble bedre bare av å rydde i indeksen. Ingen prompt-teknikk kan kompensere for dårlig kontekst.
+      </p>
+    </div>
   </div>
 );
 
 const ChunkDetail: React.FC = () => (
-  <div style={{ display: "flex", gap: 20 }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ display: "flex", gap: 20 }}>
     <div
       style={{
         flex: 1,
@@ -232,11 +248,26 @@ til vedtak...`}
         3. Fallback til fast størrelse
       </div>
     </div>
+    </div>
+    <div
+      style={{
+        padding: "12px 20px",
+        background: `${theme.gold}10`,
+        border: `1px solid ${theme.gold}25`,
+        borderRadius: 10,
+        animation: "pipelineFadeIn 0.6s ease-out 1.1s both",
+      }}
+    >
+      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+        En chunk som kutter midt i en setning gir et halvt svar. Overskriftsbasert splitting bevarer forfatterens struktur — og gir agenten sammenhengende kontekst. Forskning viser at dette betyr mer enn valg av embedding-modell.
+      </p>
+    </div>
   </div>
 );
 
 const TaggDetail: React.FC = () => (
-  <div style={{ display: "flex", gap: 20 }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ display: "flex", gap: 20 }}>
     <div
       style={{
         flex: 1,
@@ -313,11 +344,26 @@ const TaggDetail: React.FC = () => (
         ?tags=lovvalg,eessi → filtrert søk via API
       </div>
     </div>
+    </div>
+    <div
+      style={{
+        padding: "12px 20px",
+        background: `${theme.gold}10`,
+        border: `1px solid ${theme.gold}25`,
+        borderRadius: 10,
+        animation: "pipelineFadeIn 0.6s ease-out 1.3s both",
+      }}
+    >
+      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+        Tags injiseres i søketeksten og forbedrer ranking i både vektor- og nøkkelordsøk. I tillegg kan agenten filtrere med tags — et søk om «lovvalg» trenger ikke lete gjennom onboarding-docs og møtereferater.
+      </p>
+    </div>
   </div>
 );
 
 const IndekserDetail: React.FC = () => (
-  <div style={{ display: "flex", gap: 20 }}>
+  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div style={{ display: "flex", gap: 20 }}>
     <div
       style={{
         flex: 1,
@@ -413,6 +459,20 @@ const IndekserDetail: React.FC = () => (
       >
         Søk: &lt;50ms | Med reranking: ~1s
       </div>
+    </div>
+    </div>
+    <div
+      style={{
+        padding: "12px 20px",
+        background: `${theme.gold}10`,
+        border: `1px solid ${theme.gold}25`,
+        borderRadius: 10,
+        animation: "pipelineFadeIn 0.6s ease-out 1.5s both",
+      }}
+    >
+      <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
+        Vektorsøk forstår at «rammeavtaler» betyr «framework agreements» — men finner aldri «LA_BUC_01» uten nøkkelord. Hybrid søk kombinerer begge, og cross-encoder reranking skiller tydelig mellom relevant og irrelevant.
+      </p>
     </div>
   </div>
 );
