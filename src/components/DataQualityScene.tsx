@@ -259,7 +259,7 @@ til vedtak...`}
       }}
     >
       <p style={{ fontSize: 14, color: theme.gold, fontWeight: 500 }}>
-        En chunk som kutter midt i en setning gir et halvt svar. Overskriftsbasert splitting bevarer forfatterens struktur — og gir agenten sammenhengende kontekst. Forskning viser at dette betyr mer enn valg av embedding-modell.
+        Hver chunk blir én vektor i søkeindeksen. En chunk som blander to temaer matcher dårlig på begge. Overskriftsbasert splitting gir fokuserte vektorer som treffer riktig — og sammenhengende kontekst til agenten.
       </p>
     </div>
   </div>
