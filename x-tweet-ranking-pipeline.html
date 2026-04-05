@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Timeline to Telegram — X/Twitter Ranking Pipeline</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --bg-card: #ffffff;
+            --text: #1a1a2e;
+            --text-secondary: #555;
+            --text-muted: #666;
+            --text-dim: #888;
+            --accent: #6c63ff;
+            --border: #e9ecef;
+            --bg-code: #f1f3f5;
+            --bg-example: #f8f9fa;
+            --bg-th: #f1f3f5;
+            --shadow: rgba(0,0,0,0.08);
+            --stat-bg: linear-gradient(135deg, #6c63ff15, #6c63ff05);
+            --layer1: #22d3ee;
+            --layer2: #a78bfa;
+            --layer3: #f59e0b;
+            --layer4: #ef4444;
+            --telegram: #2AABEE;
+        }
+        [data-theme="dark"] {
+            --bg: #0a0a0f;
+            --bg-card: #141420;
+            --text: #e4e4ef;
+            --text-secondary: #b0b0c0;
+            --text-muted: #8888a0;
+            --text-dim: #6a6a80;
+            --accent: #8b7fff;
+            --border: #2a2a3a;
+            --bg-code: #1e1e2e;
+            --bg-example: #12121e;
+            --bg-th: #1a1a2a;
+            --shadow: rgba(0,0,0,0.3);
+            --stat-bg: linear-gradient(135deg, #6c63ff20, #6c63ff08);
+        }
+        body {
+            font-family: -apple-system, system-ui, 'Segoe UI', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: background 0.3s, color 0.3s;
+        }
+        h1 { text-align: center; color: var(--text); margin-bottom: 8px; font-size: 2em; }
+        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 40px; font-size: 1.1em; }
+        h2 { color: var(--text); border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-top: 40px; }
+        h3 { color: var(--text); margin-top: 28px; }
+        a { color: var(--accent); }
+        .card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 28px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.3s;
+        }
+        .card h2 { margin-top: 0; }
+        .mermaid { display: flex; justify-content: center; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+        th { background: var(--bg-th); font-weight: 600; }
+        code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: var(--bg-code); padding: 16px; border-radius: 8px; overflow-x: auto; }
+        pre code { background: none; padding: 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin: 20px 0; }
+        .stat-card { background: var(--stat-bg); border: 1px solid #6c63ff30; border-radius: 10px; padding: 16px; text-align: center; }
+        .stat-card .number { font-size: 2em; font-weight: 700; color: var(--accent); }
+        .stat-card .label { font-size: 0.85em; color: var(--text-muted); }
+        .example { background: var(--bg-example); border-left: 4px solid var(--accent); padding: 16px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .example .query { font-weight: 600; color: var(--accent); }
+        .example .result { color: var(--text-secondary); margin-top: 8px; }
+        .highlight { background: #6c63ff20; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+        .caption { text-align: center; font-size: 0.85em; color: var(--text-dim); margin-top: 8px; font-style: italic; }
+
+        .layer-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: white;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .layer-badge.l1 { background: var(--layer1); color: #1a1a2e; }
+        .layer-badge.l2 { background: var(--layer2); }
+        .layer-badge.l3 { background: var(--layer3); color: #1a1a2e; }
+        .layer-badge.l4 { background: var(--layer4); }
+
+        .formula {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.95em;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .telegram-mock {
+            background: #1a1a2e;
+            color: #e4e4ef;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-family: -apple-system, system-ui, sans-serif;
+            font-size: 0.95em;
+            line-height: 1.6;
+            max-width: 500px;
+        }
+        .telegram-mock .tg-header { font-size: 1.1em; margin-bottom: 12px; }
+        .telegram-mock .tg-section { color: #8b7fff; font-weight: 600; margin: 10px 0 4px; }
+        .telegram-mock .tg-item { margin: 4px 0; }
+        .telegram-mock .tg-handle { color: #22d3ee; }
+        .telegram-mock .tg-stats { color: #6a6a80; font-size: 0.85em; }
+        .telegram-mock .tg-desc { color: #b0b0c0; margin-left: 18px; font-size: 0.9em; }
+        .telegram-mock .tg-notable { color: #b0b0c0; margin: 2px 0; }
+
+        .phase-indicator {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        .phase-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            border: 1px solid var(--border);
+            background: var(--bg-code);
+        }
+        .phase-step.active {
+            border-color: var(--accent);
+            background: #6c63ff15;
+            font-weight: 600;
+        }
+        .phase-step .phase-label { font-weight: 600; display: block; margin-bottom: 4px; }
+
+        .theme-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 100;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: background 0.3s, color 0.3s;
+        }
+        .theme-toggle:hover { border-color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790; Dark</button>
+
+<h1>From Timeline to Telegram</h1>
+<p class="subtitle">How Huginn turns 80+ raw tweets into a curated hourly digest using a 4-layer scoring pipeline</p>
+
+<!-- ===== THE PROBLEM ===== -->
+<div class="card">
+    <h2>The Problem</h2>
+    <p>X's algorithmic timeline serves 60&ndash;80 tweets per fetch &mdash; a mix of viral posts, engagement bait, shop accounts, genuine insights, and everything in between. The original approach sent all of them to Claude Haiku and asked it to "pick the best ones."</p>
+    <p>This had three problems:</p>
+    <ol>
+        <li><strong>No quality signals</strong> &mdash; engagement metrics were partially stripped during formatting, so Haiku had no way to distinguish a 50K-like post from a 3-like post</li>
+        <li><strong>Token waste</strong> &mdash; 80 tweets &times; ~100 tokens = 8K input tokens per run, mostly noise</li>
+        <li><strong>Inconsistent digests</strong> &mdash; without ranking signals, digest quality varied wildly between runs</li>
+    </ol>
+    <p>The solution: a <strong>multi-layer scoring pipeline</strong> that runs before the LLM ever sees a tweet. Each layer adds an independent quality signal. By the time Haiku receives the tweets, they're pre-ranked and filtered to the top 30.</p>
+</div>
+
+<!-- ===== PIPELINE STATS ===== -->
+<div class="card">
+    <h2>Pipeline at a Glance</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="number">6,551</div>
+            <div class="label">Tweets indexed</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">1,877</div>
+            <div class="label">Unique authors</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">2,457</div>
+            <div class="label">Graph nodes</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">1,962</div>
+            <div class="label">Interaction edges</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">1,240</div>
+            <div class="label">Author communities</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">30</div>
+            <div class="label">Tweets to LLM</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== END-TO-END PIPELINE ===== -->
+<div class="card">
+    <h2>End-to-End Pipeline</h2>
+    <div class="mermaid">
+flowchart TD
+    X["X GraphQL API\nHome Timeline"]
+
+    subgraph FETCH ["huginn-jarvis: Fetch"]
+        F["x_fetcher.py\nCookie auth, paginated\n~20 tweets/page"]
+    end
+
+    subgraph SCORE ["huginn-jarvis: Scoring Layers"]
+        direction TB
+        L1["Layer 1: Engagement\nlikes + RT*20 + replies*13.5\n+ bookmarks*10 / sqrt views"]
+        L2["Layer 2: Relevance\ne5-base cosine sim\nto 5 interest profiles"]
+        L3["Layer 3: Author Graph\nPageRank + Louvain\n2,457 authors, 1,962 edges"]
+        BLEND["Score Blending\n0.35 eng + 0.35 rel + 0.3 author\n= combined_score"]
+        L1 --> BLEND
+        L2 --> BLEND
+        L3 --> BLEND
+    end
+
+    subgraph INDEX ["huginn: Collection"]
+        IDX["x-feed index\nVector + BM25\n6,551 documents"]
+    end
+
+    subgraph DIGEST ["muninn: Digest"]
+        direction TB
+        WATCH["X Watcher\nTop-30 by combined_score\nDedup via lastNotifiedIds"]
+        HAIKU["Claude Haiku\nTop Picks 3-5\nAlso Notable up to 10"]
+        TG["Telegram Bot\nHTML formatted\nEvery hour"]
+        WATCH --> HAIKU
+        HAIKU --> TG
+    end
+
+    X --> F
+    F --> L1
+    F --> L2
+    F --> L3
+    BLEND -->|"Markdown + YAML\nfrontmatter"| IDX
+    IDX -->|"Knowledge API"| WATCH
+
+    style X fill:#1DA1F2,color:#fff,stroke:none
+    style FETCH fill:#6c63ff08,stroke:#6c63ff
+    style SCORE fill:#f59e0b08,stroke:#f59e0b
+    style INDEX fill:#22d3ee08,stroke:#22d3ee
+    style DIGEST fill:#4ade8008,stroke:#4ade80
+    style TG fill:#2AABEE,color:#fff,stroke:none
+    </div>
+    <p class="caption">Two repos collaborate: huginn-jarvis handles fetching and scoring, muninn handles digest generation and Telegram delivery. They communicate through huginn's indexed collection.</p>
+</div>
+
+<!-- ===== LAYER 1: ENGAGEMENT ===== -->
+<div class="card">
+    <h2><span class="layer-badge l1">L1</span> Engagement Scoring</h2>
+    <p>Each tweet gets a composite engagement score using weights from X's open-sourced <a href="https://github.com/twitter/the-algorithm">Heavy Ranker algorithm</a>. The key insight: normalize by <code>sqrt(views)</code> to measure engagement <em>rate</em>, not raw volume. A niche tweet with 500 likes from 5K views ranks higher than a celebrity tweet with 1,000 likes from 1M views.</p>
+
+    <table>
+        <tr><th>Signal</th><th>Weight</th><th>Rationale</th></tr>
+        <tr><td>Retweets</td><td><strong>20x</strong></td><td>Strongest amplification &mdash; someone put their name on it</td></tr>
+        <tr><td>Replies</td><td><strong>13.5x</strong></td><td>Indicates discussion, controversy, or genuine interest</td></tr>
+        <tr><td>Bookmarks</td><td><strong>10x</strong></td><td>High-intent private save &mdash; "I'll come back to this"</td></tr>
+        <tr><td>Likes</td><td><strong>1x</strong></td><td>Baseline engagement (lowest signal, easiest action)</td></tr>
+    </table>
+
+    <div class="formula">
+        engagement = (likes&middot;1 + retweets&middot;20 + replies&middot;13.5 + bookmarks&middot;10) / &radic;views
+    </div>
+
+    <p>Content-type boosts stack multiplicatively:</p>
+    <ul>
+        <li><strong>Long-form notes:</strong> +20% &mdash; authors invested more effort</li>
+        <li><strong>Quote tweets:</strong> +10% &mdash; commentary adds context</li>
+        <li><strong>Media attachments:</strong> +5% &mdash; visual content</li>
+    </ul>
+
+    <div class="example">
+        <div class="query">High engagement rate (ranks higher)</div>
+        <div class="result">@karpathy: 500 likes, 50 RT, 20 replies from 5K views &rarr; <span class="highlight">score: 87.7</span></div>
+    </div>
+    <div class="example">
+        <div class="query">High raw numbers but low rate (ranks lower)</div>
+        <div class="result">@celebrity: 1,000 likes, 20 RT from 1M views &rarr; <span class="highlight">score: 1.4</span></div>
+    </div>
+</div>
+
+<!-- ===== LAYER 2: RELEVANCE ===== -->
+<div class="card">
+    <h2><span class="layer-badge l2">L2</span> Embedding-Based Interest Relevance</h2>
+    <p>Not all high-engagement tweets are relevant. A viral meme might score high on engagement but low on relevance to AI and developer tools. Layer 2 uses the same <code>multilingual-e5-base</code> model as huginn's search index to compute cosine similarity between each tweet and 5 user-defined interest profiles.</p>
+
+    <table>
+        <tr><th>Interest Profile</th><th>Weight</th><th>What it matches</th></tr>
+        <tr><td>AI &amp; Agents</td><td><strong>1.0</strong></td><td>LLMs, coding assistants, prompt engineering, RAG, AI infra</td></tr>
+        <tr><td>Developer Tools</td><td><strong>1.0</strong></td><td>IDEs, CLI tools, build systems, testing, CI/CD, devex</td></tr>
+        <tr><td>Open Source</td><td><strong>0.8</strong></td><td>GitHub trending, community-driven dev, OSS releases</td></tr>
+        <tr><td>Cloud &amp; Infrastructure</td><td><strong>0.8</strong></td><td>Kubernetes, distributed systems, databases, observability</td></tr>
+        <tr><td>Tech Industry</td><td><strong>0.6</strong></td><td>Major launches, funding rounds, company announcements</td></tr>
+    </table>
+
+    <div class="mermaid">
+flowchart LR
+    T["Tweet text\npassage: ..."]
+    P1["AI & Agents\nquery: ..."]
+    P2["Dev Tools\nquery: ..."]
+    P3["Open Source\nquery: ..."]
+    P4["Cloud & Infra\nquery: ..."]
+    P5["Tech Industry\nquery: ..."]
+
+    E5["multilingual-e5-base\n768-dim embeddings"]
+
+    T --> E5
+    P1 --> E5
+    P2 --> E5
+    P3 --> E5
+    P4 --> E5
+    P5 --> E5
+
+    E5 --> COS["Cosine similarity\nweighted by profile weight"]
+    COS --> MAX["max across profiles\n= relevance_score"]
+
+    style E5 fill:#a78bfa,color:#fff,stroke:none
+    style MAX fill:#4ade80,color:#1a1a2e,stroke:none
+    </div>
+
+    <div class="formula">
+        relevance = max( cosine(tweet, profile<sub>i</sub>) &times; weight<sub>i</sub> )&ensp;for all profiles
+    </div>
+
+    <div class="two-col">
+        <div class="example">
+            <div class="query">High relevance</div>
+            <div class="result">@karpathy: "New approach to knowledge base retrieval using hybrid vector + graph..." &rarr; <span class="highlight">0.87</span></div>
+        </div>
+        <div class="example">
+            <div class="query">Low relevance</div>
+            <div class="result">@shopaccount: "50% off our spring collection! Use code SAVE50..." &rarr; <span class="highlight">0.52</span></div>
+        </div>
+    </div>
+    <p>Average relevance across the dataset: <strong>0.79</strong>. This is relatively high because X's algorithm already biases toward your interests &mdash; the relevance scorer differentiates within that pre-filtered set.</p>
+</div>
+
+<!-- ===== LAYER 3: AUTHOR GRAPH ===== -->
+<div class="card">
+    <h2><span class="layer-badge l3">L3</span> Author Graph Scoring</h2>
+    <p>Layers 1 and 2 score individual tweets. Layer 3 asks a different question: <strong>is this author consistently high-signal?</strong> It builds a directed interaction graph from all accumulated tweet data and uses network analysis to score authors by structural importance and content quality.</p>
+
+    <div class="mermaid">
+flowchart LR
+    subgraph GRAPH ["Author Interaction Graph"]
+        K["@karpathy\nscore: 0.68"]
+        C["@claudeai\nscore: 0.50"]
+        A["@anthropicai\nscore: 0.45"]
+        O["@omarsar0\nscore: 0.35"]
+        T["@tom_doerr\nscore: 0.28"]
+        D["@DataChaz\nscore: 0.24"]
+
+        K -->|"quotes"| C
+        K -->|"mentions"| A
+        A -->|"quotes"| C
+        O -->|"mentions"| K
+        T -->|"quotes"| K
+        T -->|"mentions"| O
+        D -->|"mentions"| K
+        D -->|"quotes"| A
+        O -->|"quotes"| A
+    end
+
+    style K fill:#f59e0b,color:#1a1a2e,stroke:none
+    style C fill:#6c63ff,color:#fff,stroke:none
+    style A fill:#6c63ff,color:#fff,stroke:none
+    style O fill:#22d3ee,color:#1a1a2e,stroke:none
+    style T fill:#22d3ee,color:#1a1a2e,stroke:none
+    style D fill:#22d3ee,color:#1a1a2e,stroke:none
+    </div>
+
+    <h3>How the graph is built</h3>
+    <div class="two-col">
+        <div>
+            <strong>Nodes</strong> &mdash; every @handle seen in the timeline (1,877 unique authors from filenames, plus 580 quoted/mentioned-only handles = 2,457 total)
+        </div>
+        <div>
+            <strong>Edges</strong> &mdash; extracted from tweet markdown:
+            <ul>
+                <li><code>quote</code>: <code>&gt; **Quoted @handle:**</code> (weight: 3x)</li>
+                <li><code>mention</code>: <code>@handle</code> in tweet body (weight: 1x)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>Two algorithms, two signals</h3>
+    <div class="two-col">
+        <div>
+            <h3>PageRank</h3>
+            <p>Runs on the directed graph (&alpha;=0.85). Finds structurally important authors &mdash; accounts that many high-signal people quote or mention. <code>@claudeai</code> has the highest PageRank (1.000 normalized) because it's the most quoted account in the dataset.</p>
+        </div>
+        <div>
+            <h3>Louvain Communities</h3>
+            <p>Runs on the undirected projection. Discovers author clusters automatically &mdash; who interacts with whom. Found <strong>1,240 communities</strong>, with the largest being an AI/Claude cluster (118 authors), tech industry (81), and ML/data (76).</p>
+        </div>
+    </div>
+
+    <div class="formula">
+        author_score = 0.5 &times; pagerank<sub>norm</sub> + 0.5 &times; engagement<sub>norm</sub>
+    </div>
+
+    <h3>Top-scored authors</h3>
+    <table>
+        <tr><th>Author</th><th>Score</th><th>PageRank</th><th>Avg Engagement</th><th>Tweets</th><th>Community</th><th>Notes</th></tr>
+        <tr><td>@karpathy</td><td><strong>0.68</strong></td><td>0.183</td><td>87.7</td><td>9</td><td>423</td><td>Seed account (1.5x)</td></tr>
+        <tr><td>@claudeai</td><td><strong>0.50</strong></td><td>1.000</td><td>0.0</td><td>6</td><td>368</td><td>Highest PageRank</td></tr>
+        <tr><td>@anthropicai</td><td><strong>0.45</strong></td><td>0.046</td><td>30.1</td><td>5</td><td>368</td><td>Seed account (1.5x)</td></tr>
+        <tr><td>@vitalikbuterin</td><td><strong>0.35</strong></td><td>0.000</td><td>75.1</td><td>1</td><td>1149</td><td>Pure engagement</td></tr>
+    </table>
+
+    <h3>Bootstrap: Seed accounts</h3>
+    <p>Until enough interaction history accumulates for PageRank to be meaningful on its own, 19 known high-signal accounts receive a multiplicative boost (1.2&ndash;1.5x), capped at 1.0. The seed list includes: karpathy, AnthropicAI, OpenAI, GoogleDeepMind, omarsar0, ThePrimeagen, steipete, garrytan, swyx, and others. As the graph grows, PageRank naturally identifies these accounts anyway &mdash; the seeds just accelerate convergence.</p>
+</div>
+
+<!-- ===== SCORE BLENDING ===== -->
+<div class="card">
+    <h2>Score Blending: Putting It All Together</h2>
+    <p>Each layer produces a score in [0, 1]. The final <code>combined_score</code> is a weighted blend that evolved as layers were added:</p>
+
+    <div class="phase-indicator">
+        <div class="phase-step">
+            <span class="phase-label">Phase 1</span>
+            engagement only
+        </div>
+        <div class="phase-step">
+            <span class="phase-label">Phase 2</span>
+            + relevance
+        </div>
+        <div class="phase-step active">
+            <span class="phase-label">Phase 3 (current)</span>
+            + author graph
+        </div>
+        <div class="phase-step">
+            <span class="phase-label">Phase 4 (planned)</span>
+            + LLM reranker
+        </div>
+    </div>
+
+    <table>
+        <tr><th>Phase</th><th>Formula</th><th>Status</th></tr>
+        <tr><td>1</td><td><code>final = engagement_score</code></td><td>Superseded</td></tr>
+        <tr><td>2</td><td><code>final = 0.50 &times; eng + 0.50 &times; rel</code></td><td>Superseded</td></tr>
+        <tr><td><strong>3</strong></td><td><code><strong>final = 0.35 &times; eng + 0.35 &times; rel + 0.30 &times; author</strong></code></td><td><strong>Current</strong></td></tr>
+        <tr><td>4</td><td><code>LLM reranks top-N from phase 3</code></td><td>Planned</td></tr>
+    </table>
+
+    <h3>Normalization</h3>
+    <p>Each score must be in [0, 1] before blending so no single layer dominates:</p>
+    <ul>
+        <li><strong>Engagement:</strong> <code>min(1.0, log1p(raw) / 6.2)</code> &mdash; log scale compresses the long tail, 6.2 = log1p(500) is a fixed ceiling</li>
+        <li><strong>Relevance:</strong> native [0, 1] from cosine similarity</li>
+        <li><strong>Author:</strong> native [0, 1] from PageRank + engagement blend</li>
+    </ul>
+
+    <p>When author scores aren't available (e.g., first run before graph is built), the scorer falls back to 2-way blending automatically.</p>
+
+    <h3>What gets written to each tweet</h3>
+    <pre><code>---
+title: "@karpathy &mdash; New approach to knowledge base retrieval..."
+url: https://x.com/karpathy/status/2040123456789
+date: 2026-04-05
+category: x-feed
+tags: "ai, developer-tools"
+engagement_score: 87.7234        # Layer 1: raw engagement rate
+relevance_score: 0.8712          # Layer 2: best-match interest profile
+author_score: 0.6803             # Layer 3: PageRank + engagement blend
+combined_score: 0.7148           # Weighted: 0.35*eng + 0.35*rel + 0.3*auth
+---</code></pre>
+</div>
+
+<!-- ===== DIGEST PIPELINE ===== -->
+<div class="card">
+    <h2>The Digest Pipeline</h2>
+    <p>Once tweets are scored and indexed, muninn's scheduler picks them up and turns them into a Telegram notification. Here's the complete sequence:</p>
+
+    <div class="mermaid">
+sequenceDiagram
+    participant S as Scheduler<br/>60s tick
+    participant W as X Watcher
+    participant H as Huginn API
+    participant LLM as Claude Haiku
+    participant T as Telegram Bot
+
+    S->>S: Is X watcher due?<br/>(hourly check)
+    S->>W: checkX()
+
+    W->>H: GET /api/collection/x-feed/documents
+    H-->>W: Document list (IDs + URLs)
+
+    W->>W: Filter by date<br/>(today + yesterday)
+    W->>W: Remove already-notified<br/>(lastNotifiedIds, max 400)
+
+    W->>H: GET /api/document/x-feed/{id}<br/>(batch of 20)
+    H-->>W: Full markdown + frontmatter
+
+    W->>W: Extract combined_score<br/>from each document
+    W->>W: Sort by score descending
+    W->>W: Take top 30
+
+    W->>W: Compact tweets to<br/>single-line format
+
+    W->>LLM: Prompt: pre-ranked tweets<br/>+ digest instructions
+    LLM-->>W: Markdown digest<br/>Top Picks + Also Notable
+
+    W-->>S: WatcherAlert + trackingIds
+    S->>S: Convert Markdown to<br/>Telegram HTML
+    S->>T: sendMessage(HTML)
+    T-->>S: Delivered
+
+    S->>S: Update lastNotifiedIds<br/>(rolling window of 400)
+    </div>
+    <p class="caption">The scheduler runs every 60 seconds. The X watcher fires every hour to check for new high-signal tweets. Dedup ensures no tweet is ever sent twice.</p>
+
+    <h3>Tweet compaction</h3>
+    <p>Before sending to Haiku, each tweet is compressed from a full markdown document (~500 bytes) into a single line:</p>
+    <div class="example">
+        <div class="query">Full markdown document (what's stored)</div>
+        <div class="result">
+            <code>---</code><br>
+            <code>title: "@karpathy &mdash; New approach to..."</code><br>
+            <code>engagement_score: 87.7234</code><br>
+            <code>relevance_score: 0.8712</code><br>
+            <code>author_score: 0.6803</code><br>
+            <code>combined_score: 0.7148</code><br>
+            <code>---</code><br>
+            <code># @karpathy &mdash; Andrej Karpathy</code><br>
+            <code>New approach to knowledge base retrieval...</code><br>
+            <code>---</code><br>
+            <code>- **Engagement:** 12,400 likes &middot; 891 retweets &middot; 2.1M views</code><br>
+        </div>
+    </div>
+    <div class="example">
+        <div class="query">Compacted for LLM (what Haiku sees)</div>
+        <div class="result"><code>@karpathy: New approach to knowledge base retrieval using hybrid vector + graph... (12.4K likes, 2.1M views)</code><br><code>&ensp;&ensp;URL: https://x.com/karpathy/status/2040123456789</code></div>
+    </div>
+
+    <h3>The Haiku prompt</h3>
+    <p>Haiku receives the top-30 tweets, pre-sorted by score, with this instruction:</p>
+    <pre><code>Create a digest with two sections:
+- **Top Picks** (3-5): most interesting/impactful, high-engagement content
+  with a view-to-like ratio suggesting genuine interest
+- **Also Notable** (up to 10): one-liner summaries
+
+Filter out: spam, engagement bait, low-effort listicles, crypto shilling.
+Tweets are pre-ranked by engagement score (highest engagement first).</code></pre>
+</div>
+
+<!-- ===== TELEGRAM OUTPUT ===== -->
+<div class="card">
+    <h2>What You Get: The Telegram Digest</h2>
+    <p>Every hour, the watcher checks for new interesting tweets. When it finds them, the Markdown digest from Haiku is converted to Telegram-safe HTML (<code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;a&gt;</code>) and delivered via a Grammy bot.</p>
+
+    <div class="telegram-mock">
+        <div class="tg-header">&#x1D571; <b>X Timeline Digest</b></div>
+
+        <div class="tg-section">Top Picks</div>
+
+        <div class="tg-item">1. <span class="tg-handle">@karpathy</span>: New approach to knowledge base retrieval using hybrid vector + graph search <span class="tg-stats">(12.4K likes, 2.1M views)</span></div>
+        <div class="tg-desc">Introduces a practical architecture for enterprise RAG that combines dense retrieval with structured knowledge graphs.</div>
+
+        <div class="tg-item">2. <span class="tg-handle">@AnthropicAI</span>: Claude now supports extended thinking with tool use <span class="tg-stats">(8.2K likes, 1.5M views)</span></div>
+        <div class="tg-desc">Major capability update &mdash; Claude can now reason through multi-step tool chains before responding.</div>
+
+        <div class="tg-item">3. <span class="tg-handle">@steipete</span>: We shipped Claude Code integration into our IDE <span class="tg-stats">(3.1K likes, 420K views)</span></div>
+        <div class="tg-desc">Deep dive into how they built a native IDE extension on top of Claude's API.</div>
+
+        <div class="tg-section">Also Notable</div>
+        <div class="tg-notable">&bull; <span class="tg-handle">@ThePrimeagen</span>: Obsidian team growing from 3 to 4 engineers</div>
+        <div class="tg-notable">&bull; <span class="tg-handle">@omarsar0</span>: Comprehensive survey of LLM reasoning techniques</div>
+        <div class="tg-notable">&bull; <span class="tg-handle">@swyx</span>: Why the "AI engineer" role is eating software</div>
+        <div class="tg-notable">&bull; <span class="tg-handle">@garrytan</span>: YC W26 batch highlights</div>
+        <div class="tg-notable">&bull; <span class="tg-handle">@tom_doerr</span>: Open-source agent framework comparison</div>
+    </div>
+    <p class="caption">Simulated output. Actual content varies based on the day's timeline.</p>
+</div>
+
+<!-- ===== FILE MAP ===== -->
+<div class="card">
+    <h2>Architecture: Where Everything Lives</h2>
+
+    <table>
+        <tr><th>Component</th><th>Repo</th><th>File</th><th>What it does</th></tr>
+        <tr>
+            <td><span class="layer-badge l1">L1</span> Fetcher + Engagement</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x/fetchers/x_fetcher.py</code></td>
+            <td>GraphQL timeline fetch, engagement scoring, markdown output</td>
+        </tr>
+        <tr>
+            <td><span class="layer-badge l2">L2</span> Relevance Scorer</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x/scoring/relevance_scorer.py</code></td>
+            <td>e5-base embedding similarity + score blending</td>
+        </tr>
+        <tr>
+            <td><span class="layer-badge l3">L3</span> Author Graph</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x/scoring/author_graph.py</code></td>
+            <td>Interaction graph, PageRank, Louvain communities</td>
+        </tr>
+        <tr>
+            <td>Interest Profiles</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x/scoring/interest_profiles.json</code></td>
+            <td>5 editable interest profiles with weights</td>
+        </tr>
+        <tr>
+            <td>Seed Accounts</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x/scoring/seed_accounts.json</code></td>
+            <td>19 high-signal accounts with boost multipliers</td>
+        </tr>
+        <tr>
+            <td>Pipeline Script</td>
+            <td>huginn-jarvis</td>
+            <td><code>scripts/x_feed_update.sh</code></td>
+            <td>Orchestrates: fetch &rarr; author graph &rarr; relevance &rarr; index</td>
+        </tr>
+        <tr>
+            <td>X Watcher</td>
+            <td>muninn</td>
+            <td><code>src/watchers/x.ts</code></td>
+            <td>Top-N selection, compaction, LLM digest generation</td>
+        </tr>
+        <tr>
+            <td>Scheduler</td>
+            <td>muninn</td>
+            <td><code>src/scheduler/runner.ts</code></td>
+            <td>Cron-like watcher scheduling, alert dispatch</td>
+        </tr>
+        <tr>
+            <td>LLM Executor</td>
+            <td>muninn</td>
+            <td><code>src/scheduler/executor.ts</code></td>
+            <td>Claude CLI subprocess management</td>
+        </tr>
+        <tr>
+            <td>Telegram Format</td>
+            <td>muninn</td>
+            <td><code>src/bot/telegram-format.ts</code></td>
+            <td>Markdown &rarr; Telegram HTML conversion</td>
+        </tr>
+        <tr>
+            <td>Watcher DB</td>
+            <td>muninn</td>
+            <td><code>db/init.sql</code></td>
+            <td>Watchers table: schedule, config, dedup state</td>
+        </tr>
+    </table>
+
+    <div class="mermaid">
+flowchart LR
+    subgraph HJ ["huginn-jarvis"]
+        direction TB
+        FET["x_fetcher.py"]
+        AG["author_graph.py"]
+        RS["relevance_scorer.py"]
+        SH["x_feed_update.sh"]
+        SH --> FET
+        SH --> AG
+        SH --> RS
+    end
+
+    subgraph H ["huginn"]
+        direction TB
+        COL["x-feed collection"]
+        API["Knowledge API\n:8321"]
+        COL --> API
+    end
+
+    subgraph M ["muninn"]
+        direction TB
+        XW["x.ts watcher"]
+        EX["executor.ts"]
+        TF["telegram-format.ts"]
+        BOT["Grammy bot"]
+        XW --> EX
+        EX --> TF
+        TF --> BOT
+    end
+
+    RS -->|"markdown files"| COL
+    API -->|"GET /api/collection"| XW
+    BOT -->|"sendMessage"| TG["Telegram"]
+
+    style HJ fill:#f59e0b08,stroke:#f59e0b
+    style H fill:#22d3ee08,stroke:#22d3ee
+    style M fill:#4ade8008,stroke:#4ade80
+    style TG fill:#2AABEE,color:#fff,stroke:none
+    </div>
+</div>
+
+<!-- ===== COST & EFFICIENCY ===== -->
+<div class="card">
+    <h2>Cost &amp; Efficiency</h2>
+
+    <div class="two-col">
+        <div>
+            <h3>Before (all tweets to LLM)</h3>
+            <ul>
+                <li>~80 tweets &times; 100 tokens = <strong>8K input tokens</strong></li>
+                <li>No quality signals for ranking</li>
+                <li>Inconsistent digest quality</li>
+                <li>All scoring done by Haiku (expensive)</li>
+            </ul>
+        </div>
+        <div>
+            <h3>After (pre-ranked pipeline)</h3>
+            <ul>
+                <li>30 tweets &times; 60 tokens = <strong>1.8K input tokens</strong></li>
+                <li>3-layer scoring with engagement, relevance, author</li>
+                <li>Consistently high-quality digests</li>
+                <li>Scoring: free (local Python + embeddings)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="number">77%</div>
+            <div class="label">Fewer tokens to LLM</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">$0</div>
+            <div class="label">Scoring cost (all local)</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">~$0.001</div>
+            <div class="label">Per digest (Haiku)</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">1h</div>
+            <div class="label">Check interval</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== REFERENCES ===== -->
+<div class="card">
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://github.com/twitter/the-algorithm">X's Recommendation Algorithm</a> &mdash; open-sourced Heavy Ranker weights used for engagement scoring</li>
+        <li><a href="https://dl.acm.org/doi/10.1145/3394486.3403370">SimClusters (KDD 2020)</a> &mdash; X's community-space representation for user and tweet similarity</li>
+        <li><a href="https://www.lesswrong.com/posts/s5PwfyRFrGFaZFevW/finding-high-signal-people-applying-pagerank-to-twitter-1">Finding High Signal People</a> &mdash; LessWrong post on applying PageRank to Twitter interaction graphs</li>
+        <li><a href="https://huggingface.co/intfloat/multilingual-e5-base">multilingual-e5-base</a> &mdash; embedding model used for interest profile matching</li>
+    </ul>
+</div>
+
+<script>
+    function getTheme() {
+        return localStorage.getItem('x-pipeline-theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('theme-toggle');
+        btn.innerHTML = theme === 'dark' ? '&#9788; Light' : '&#9790; Dark';
+        localStorage.setItem('x-pipeline-theme', theme);
+    }
+
+    const initialTheme = getTheme();
+    applyTheme(initialTheme);
+
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: initialTheme === 'dark' ? 'dark' : 'default',
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+        sequence: {
+            diagramMarginX: 30,
+            diagramMarginY: 10,
+            actorMargin: 60,
+            width: 180,
+            height: 50,
+            messageMargin: 30,
+            mirrorActors: true,
+            useMaxWidth: true
+        }
+    });
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        location.reload();
+    });
+</script>
+</body>
+</html>
