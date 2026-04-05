@@ -40,7 +40,10 @@ export default defineConfig({
   build: {
     outDir: "dist-presentation",
     rollupOptions: {
-      input: path.resolve(__dirname, "presentation.html"),
+      input: {
+        presentation: path.resolve(__dirname, "presentation.html"),
+        "x-tweet-ranking-pipeline": path.resolve(__dirname, "x-tweet-ranking-pipeline.html"),
+      },
     },
   },
 });
